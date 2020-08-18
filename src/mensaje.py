@@ -21,7 +21,11 @@ class Mensaje:
         pass
 
     def mostrar(self, ventana):
-        ventana.blit(self.imagen, self.posicion.getPosicion())
+        while True:
+            ventana.blit(self.imagen, self.posicion.getPosicion())
+            for boton in self.boton:
+                boton.render(ventana)
+            pygame.display.update()
 
     def mover(self):
         pass
