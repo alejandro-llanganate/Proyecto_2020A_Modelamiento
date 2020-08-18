@@ -17,7 +17,7 @@ def comenzar():
 
     vida_personaje = 0
 
-    personaje = pygame.image.load("rutamaya/personaje2.png").convert()
+    personaje = pygame.image.load("personaje2.png")
     personaje.set_colorkey([0, 0, 0])  # retirar fondo
 
     # personaje = personaje_niña().dibujar()  #Ya no porque toca mandar el método blit
