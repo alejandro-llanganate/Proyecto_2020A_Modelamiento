@@ -4,8 +4,6 @@ from listener import *
 from assets.herramientas import *
 from assets.settings import *
 
-pygame.init()
-
 
 class Figura(ABC):
     def __init__(self, posicion):
