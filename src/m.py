@@ -1,6 +1,5 @@
 import pygame
 from assets.herramientas import *
-# --- class ---
 
 
 class Button(object):

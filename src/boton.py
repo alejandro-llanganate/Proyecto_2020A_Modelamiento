@@ -1,7 +1,7 @@
 import pygame
-from posicion import *
 from assets.settings import *
 from assets.herramientas import *
+from posicion import *
 
 
 class Boton:
@@ -15,6 +15,8 @@ class Boton:
         elif tipo == "ATRAS":
             self.imagen = pygame.image.load(
                 obtenerPathAbsoluto('img/botonAtras.png', __file__))
+        self.imagen = pygame.transform.scale(
+            self.imagen, settings["tamañoBoton"])
         self.posicion = posicion
 
     def render(self, ventana):
@@ -24,4 +26,4 @@ class Boton:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if self._rect.collidepoint(event.pos):
-                    print("Hola mundo")
+                    return true

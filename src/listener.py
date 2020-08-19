@@ -1,8 +1,6 @@
 import pygame
 from listener import *
 
-pygame.init()
-
 
 class Listener:
     @staticmethod
