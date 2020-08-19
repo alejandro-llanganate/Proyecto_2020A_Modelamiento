@@ -29,7 +29,7 @@ mensajeBienvenida.agregarBoton(btnAtras)
 mensajeInstrucciones.agregarBoton(btnOk)
 
 while True:
-    mensajeInstrucciones.mostrar(ventana)
+    #mensajeInstrucciones.mostrar(ventana)
     mensajeBienvenida.mostrar(ventana)
     fondoJuego.dibujar(ventana)
     camino.dibujar(ventana)

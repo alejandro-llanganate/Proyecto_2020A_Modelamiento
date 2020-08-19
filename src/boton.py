@@ -20,5 +20,8 @@ class Boton:
     def render(self, ventana):
         ventana.blit(self.imagen, self.posicion.getPosicion())
 
-    def onClic(self, function):
-        function()
+    def onClic(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                if self._rect.collidepoint(event.pos):
+                    print("Hola mundo")
