@@ -25,6 +25,10 @@ class Mensaje:
             ventana.blit(self.imagen, self.posicion.getPosicion())
             for boton in self.boton:
                 boton.render(ventana)
+               # boton.onclic(evento)
+            for event in pygame.event.get():
+                pass
+                # event_handler
             pygame.display.update()
 
     def mover(self):

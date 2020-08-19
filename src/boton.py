@@ -17,13 +17,15 @@ class Boton:
                 obtenerPathAbsoluto('img/botonAtras.png', __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoBoton"])
-        self.posicion = posicion
+        self._rect = pygame.Rect((0, 0), (100, 100))
+        self.i = 0
 
     def render(self, ventana):
-        ventana.blit(self.imagen, self.posicion.getPosicion())
+        ventana.blit(self.imagen, self._rect)
 
-    def onClic(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                if self._rect.collidepoint(event.pos):
-                    return true
+    def event_handler(self, event):
+        # change selected color if rectange clicked
+        if event.type == pygame.MOUSEBUTTONDOWN:  # is some button clicked
+            if event.button == 1:  # is left button clicked
+                if self._rect.collidepoint(event.pos):  # is mouse over button
+                    print("Hola mundo")

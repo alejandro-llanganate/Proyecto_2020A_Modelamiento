@@ -29,14 +29,15 @@ mensajeBienvenida.agregarBoton(btnAtras)
 mensajeInstrucciones.agregarBoton(btnOk)
 
 while True:
-    # mensajeInstrucciones.mostrar(ventana)
-    mensajeBienvenida.mostrar(ventana)
+    i = 0
+    for event in pygame.event.get():
+        pass
+    mensajeInstrucciones.mostrar(ventana)
+    # mensajeBienvenida.mostrar(ventana)
     fondoJuego.dibujar(ventana)
     camino.dibujar(ventana)
     camino.mover(10, ventana)
     personaje.dibujar(ventana)
-    for event in pygame.event.get():
-        btnJugar.onClic()
-    btnJugar.onClic()
+
     personaje.mover()
     pygame.display.update()
