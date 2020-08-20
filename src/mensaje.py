@@ -5,14 +5,14 @@ from assets.herramientas import *
 
 
 class Mensaje:
-    visible = True
 
     def __init__(self, imagen, posicion):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoVentana"])
-        self.boton = []
         self.posicion = posicion
+        self.boton = []
+        self.visibilidad = False
 
     def agregarBoton(self, boton):
         self.boton.append(boton)
@@ -21,7 +21,13 @@ class Mensaje:
         pass
 
     def mostrar(self, ventana):
-        while True:
+        self.visibilidad = True
+        while self.visibilidad:
+            for event in pygame.event.get():
+                for btn in self.boton:
+                    btn.onClic(event)[1]
+                    if btn.onClic(event)[1] == True :
+                        self.visibilidad = False
             ventana.blit(self.imagen, self.posicion.getPosicion())
             for boton in self.boton:
                 boton.render(ventana)

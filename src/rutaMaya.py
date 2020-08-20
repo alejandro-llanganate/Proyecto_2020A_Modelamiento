@@ -28,15 +28,23 @@ mensajeBienvenida.agregarBoton(btnJugar)
 mensajeBienvenida.agregarBoton(btnAtras)
 mensajeInstrucciones.agregarBoton(btnOk)
 
-while True:
-    # mensajeInstrucciones.mostrar(ventana)
-    mensajeBienvenida.mostrar(ventana)
+rutamayainiciado = True
+estadomensajebienvenida = True
+mensajeBienvenida.mostrar(ventana)
+mensajeInstrucciones.mostrar(ventana)
+
+while rutamayainiciado:    
+    #mensajeBienvenida.mostrar(ventana)
     fondoJuego.dibujar(ventana)
     camino.dibujar(ventana)
     camino.mover(10, ventana)
     personaje.dibujar(ventana)
     for event in pygame.event.get():
-        btnJugar.onClic()
-    btnJugar.onClic()
+        if event.type == pygame.QUIT:
+            rutamayainiciado = False
+        pass
+        # btnJugar.onClic()
+    #btnJugar.onClic()
     personaje.mover()
     pygame.display.update()
+  

@@ -6,6 +6,7 @@ from posicion import *
 
 class Boton:
     def __init__(self, tipo, posicion):
+        self.tipo = tipo
         if tipo == "OK":
             self.imagen = pygame.image.load(
                 obtenerPathAbsoluto('img/botonOk.png', __file__))
@@ -21,9 +22,13 @@ class Boton:
 
     def render(self, ventana):
         ventana.blit(self.imagen, self.posicion.getPosicion())
-
+        
     def onClic(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if event.button == 1:
-                if self._rect.collidepoint(event.pos):
-                    return true
+        rect = pygame.Rect(self.posicion.getPosicion(), (self.imagen.get_rect().width,self.imagen.get_rect().height) )
+        if event.type == pygame.MOUSEBUTTONDOWN:  
+            if event.button == 1:  
+                if rect.collidepoint(event.pos):
+                    print('s') 
+                    return (self.tipo, True)
+        return (self.tipo, False) 
+
