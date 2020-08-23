@@ -33,10 +33,18 @@ estadomensajebienvenida = True
 mensajeBienvenida.mostrar(ventana)
 mensajeInstrucciones.mostrar(ventana)
 
+
+def obtenerSegundos(ticksComienzo):
+    return (pygame.time.get_ticks()-start_ticks) / 1000
+
+
+start_ticks = pygame.time.get_ticks()
+
 while rutamayainiciado:
     fondoJuego.dibujar(ventana)
     camino.dibujar(ventana)
-    # camino.mover(10, ventana)
+    if obtenerSegundos(start_ticks) <= 5.0:
+        camino.mover(10, ventana)
     personaje.dibujar(ventana)
 
     for event in pygame.event.get():
