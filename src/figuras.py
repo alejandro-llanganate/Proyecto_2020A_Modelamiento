@@ -79,3 +79,47 @@ class Personaje(Figura):
                 0]-tamañoImagen.width/2)
             self.posicion.actualizarY(Listener.captarMouse()[
                 1]-tamañoImagen.height/2)
+
+
+class FiguraPregunta(Figura):
+    def __init__(self):
+        pass
+
+    def dibujar(self):
+        pass
+
+    def mover(self):
+        pass
+
+
+class FiguraOpcion(Figura):
+    def __init__(self):
+        pass
+
+    def dibujar(self):
+        pass
+
+    def mover(self):
+        pass
+
+
+class Marcador(Figura):
+    def __init__(self):
+        pass
+
+    def dibujar(self):
+        pass
+
+    def mover(self):
+        pass
+
+
+class Mapa(Figura):
+    def __init__(self):
+        pass
+
+    def dibujar(self):
+        pass
+
+    def mover(self):
+        pass

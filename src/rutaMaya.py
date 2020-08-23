@@ -34,17 +34,19 @@ mensajeBienvenida.mostrar(ventana)
 mensajeInstrucciones.mostrar(ventana)
 
 while rutamayainiciado:
-    # mensajeBienvenida.mostrar(ventana)
     fondoJuego.dibujar(ventana)
     camino.dibujar(ventana)
-    camino.mover(10, ventana)
+    # camino.mover(10, ventana)
     personaje.dibujar(ventana)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             rutamayainiciado = False
         pass
-        # btnJugar.onClic()
-    # btnJugar.onClic()
-    personaje.mover()
+    # initialize font; must be called after 'pygame.init()' to avoid 'Font not Initialized' error
+    myfont = pygame.font.SysFont("arial", 60)
+    # render text
+    label = myfont.render("Some text!", 1, (255, 255, 255))
+    ventana.blit(label, (settings["tamañoVentana"][0]/2.5,
+                         settings["tamañoVentana"][1]/2.5))  # personaje.mover()
     pygame.display.update()

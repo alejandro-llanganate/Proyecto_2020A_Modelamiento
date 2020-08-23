@@ -30,6 +30,5 @@ class Boton:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if rect.collidepoint(event.pos):
-                    print("cuaCua")
                     return (self.tipo, True)
         return (self.tipo, False)

@@ -3,7 +3,7 @@ from assets.herramientas import *
 import random
 
 
-class Repositorio:
+class RepositorioCuestionario:
     def __init__(self):
         try:
             with open(obtenerPathAbsoluto('data/cuestionario.json', __file__)) as archivoJSON:
@@ -13,7 +13,3 @@ class Repositorio:
 
     def obtenerPregunta(self):
         return self.__data["preguntas"][random.randint(0, len(self.__data["preguntas"])-1)]
-
-
-m = Repositorio()
-print(m.obtenerPregunta())
