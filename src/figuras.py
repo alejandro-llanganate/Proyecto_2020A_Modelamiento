@@ -82,33 +82,57 @@ class Personaje(Figura):
 
 
 class FiguraPregunta(Figura):
-    def __init__(self):
-        pass
+    def __init__(self, imagen, posicion, contenido):
+        self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
+        self.imagen = pygame.transform.scale(
+            self.imagen, settings["tamañoFigPregunta"])
+        self.posicion = posicion
+        self.contenido = contenido
 
-    def dibujar(self):
-        pass
+    def dibujar(self, ventana):
+        ventana.blit(self.imagen, self.posicion.getPosicion())
 
     def mover(self):
         pass
 
 
-class FiguraOpcion(Figura):
-    def __init__(self):
+class FiguraVida(Figura):
+    def __init__(self, imagen, posicion):
+        self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
+        self.imagen = pygame.transform.scale(
+            self.imagen, settings["tamañoFigVida"])
+        self.posicion = posicion
+
+    def dibujar(self, ventana):
+        ventana.blit(self.imagen, self.posicion.getPosicion())
+
+    def mover(self):
         pass
 
-    def dibujar(self):
-        pass
+
+class Opcion(Figura):
+    def __init__(self, imagen, posicion):
+        self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
+        self.imagen = pygame.transform.scale(
+            self.imagen, settings["tamañoOpcion"])
+        self.posicion = posicion
+
+    def dibujar(self, ventana):
+        ventana.blit(self.imagen, self.posicion.getPosicion())
 
     def mover(self):
         pass
 
 
 class Marcador(Figura):
-    def __init__(self):
-        pass
+    def __init__(self, imagen, posicion):
+        self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
+        self.imagen = pygame.transform.scale(
+            self.imagen, settings["tamañoMarcador"])
+        self.posicion = posicion
 
-    def dibujar(self):
-        pass
+    def dibujar(self, ventana):
+        ventana.blit(self.imagen, self.posicion.getPosicion())
 
     def mover(self):
         pass
