@@ -1,5 +1,6 @@
 # cambie los valores x,y en tamañoVentana para que el juego se ajuste a su pantalla
 tamañoVentana = ancho, alto = 500, 500
+
 tamañoCamino = int(ancho*0.5), alto
 tamañoBoton = int(ancho*0.13), int(alto*0.1)
 tamañoFigPregunta = int(ancho*0.5), int(alto*0.45)
