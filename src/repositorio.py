@@ -10,6 +10,6 @@ class RepositorioCuestionario:
                 self.__data = json.load(archivoJSON)
         except FileNotFoundError as error:
             print('No se encontró el archivo del cuestionario, error: ', error)
-
+    
     def obtenerPregunta(self):
         return self.__data["preguntas"][random.randint(0, len(self.__data["preguntas"])-1)]

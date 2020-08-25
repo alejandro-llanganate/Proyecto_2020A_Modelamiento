@@ -25,6 +25,7 @@ class Fondo(Figura):
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoVentana"])
         super().__init__(posicion)
+        
 
     def dibujar(self, ventana):
         ventana.blit(self.imagen, self.posicion.getPosicion())
@@ -38,22 +39,34 @@ class Camino(Figura):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
-        super().__init__(posicion)
+        self.posicion = posicion
+        #super().__init__(posicion)
 
     def dibujar(self, ventana):
         posicion = self.posicion.getPosicion()
-        ventana.blit(self.imagen, posicion)
-        ventana.blit(
-            self.imagen, (posicion[0], settings["tamañoCamino"][1]))
+        #ventana.blit(self.imagen, posicion)
+        ventana.blit(self.imagen, (posicion[0], settings["tamañoCamino"][1]))
 
     def mover(self, desplazamiento, ventana):
+        estado_movimiento = True
         x, y = self.posicion.getPosicion()
         alturaImagen = self.imagen.get_rect().height
         relativoY = y % alturaImagen
-        ventana.blit(self.imagen, (x, relativoY - alturaImagen))
-        if relativoY < settings['tamañoVentana'][1]:
-            ventana.blit(self.imagen, (x, relativoY))
-        self.posicion.actualizarY(y-desplazamiento)
+        self.distancia = abs(y)
+        if(  self.distancia <= alturaImagen*2):
+            ventana.blit(self.imagen, (x, relativoY - alturaImagen))
+            if relativoY < settings['tamañoVentana'][1]:
+                ventana.blit(self.imagen, (x, relativoY))
+            self.posicion.actualizarY(y-desplazamiento)
+        else:
+
+            ventana.blit(self.imagen, settings["coordenadaCamino"])
+        #return estado_movimiento
+        # (ti*2,ti*4,ti*3,6000,)
+
+    def notificar(self, estado_movimiento):
+        pass
+
 
 
 class Personaje(Figura):
@@ -110,7 +123,7 @@ class FiguraVida(Figura):
         pass
 
 
-class Opcion(Figura):
+class FiguraOpcion(Figura):
     def __init__(self, imagen, posicion):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
@@ -125,11 +138,13 @@ class Opcion(Figura):
 
 
 class Marcador(Figura):
-    def __init__(self, imagen, posicion):
+    def __init__(self, imagen, posicion, puntaje):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoMarcador"])
         self.posicion = posicion
+        self.puntaje = puntaje
+
 
     def dibujar(self, ventana):
         ventana.blit(self.imagen, self.posicion.getPosicion())
@@ -140,10 +155,44 @@ class Marcador(Figura):
 
 class Mapa(Figura):
     def __init__(self):
-        pass
+        self.dictFiguras = dict()
+        self.dictFiguras['fondo'] = None
+        self.dictFiguras['camino'] = None
+        self.dictFiguras['marcador'] = None
+        self.dictFiguras['figuraVida'] = None
+        self.dictFiguras['figuraOpcion'] = list()
+        self.dictFiguras['personaje'] = None
+        self.dictFiguras['figuraPregunta'] = None
 
-    def dibujar(self):
-        pass
 
-    def mover(self):
-        pass
+    def agregarFigura(self, figura):
+        if isinstance(figura, Camino):
+            self.dictFiguras['camino'] = figura
+        elif isinstance(figura, Marcador):
+            self.dictFiguras['marcador'] = figura
+        elif isinstance(figura, Fondo):
+            self.dictFiguras['fondo'] = figura
+        elif isinstance(figura, Personaje):
+            self.dictFiguras['personaje'] = figura
+        elif isinstance(figura, FiguraVida):
+            self.dictFiguras['figuraVida'] = figura
+        elif isinstance(figura, FiguraPregunta):
+            self.dictFiguras['figuraPregunta'] = figura
+        elif isinstance(figura, FiguraOpcion):
+            self.dictFiguras['figuraOpcion'].append(figura)
+    
+    def accederLista(self):
+        return self.dictFiguras
+        
+    def dibujar(self, ventana):
+        for key in self.dictFiguras:
+            if key != 'figuraOpcion' and key != 'personaje':
+                self.dictFiguras[key].dibujar(ventana)
+        for opcion in self.dictFiguras['figuraOpcion']:
+            opcion.dibujar(ventana)
+        self.dictFiguras['personaje'].dibujar(ventana)
+            
+    def mover(self, ventana):
+        self.dictFiguras['camino'].mover(10, ventana)
+        self.dictFiguras['personaje'].mover()
+        

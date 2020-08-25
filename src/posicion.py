@@ -1,6 +1,6 @@
 class Posicion:
-    def __init__(self, x, y):
-        self.x, self.y = x, y
+    def __init__(self, tupla):
+        self.x, self.y = tupla[0], tupla[1]
 
     def getPosicion(self):
         return self.x, self.y
