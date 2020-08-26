@@ -26,7 +26,6 @@ class Fondo(Figura):
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoVentana"])
         super().__init__(posicion)
-        
 
     def dibujar(self, ventana):
         ventana.blit(self.imagen, self.posicion.getPosicion())
@@ -42,8 +41,7 @@ class Camino(Figura):
             self.imagen, settings["tamañoCamino"])
         #self.listaAudioPreguntas = listaAudioPreguntas
         self.posicion = posicion
-        #super().__init__(posicion)
-        
+        # super().__init__(posicion)
 
     def dibujar(self, ventana):
         posicion = self.posicion.getPosicion()
@@ -56,7 +54,7 @@ class Camino(Figura):
         alturaImagen = self.imagen.get_rect().height
         relativoY = y % alturaImagen
         self.distancia = abs(y)
-        if(  self.distancia <= alturaImagen*2):
+        if(self.distancia <= alturaImagen*2):
             ventana.blit(self.imagen, (x, relativoY - alturaImagen))
             if relativoY < settings['tamañoVentana'][1]:
                 ventana.blit(self.imagen, (x, relativoY))
@@ -64,12 +62,11 @@ class Camino(Figura):
         else:
 
             ventana.blit(self.imagen, settings["coordenadaCamino"])
-        #return estado_movimiento
+        # return estado_movimiento
         # (ti*2,ti*4,ti*3,6000,)
 
     def notificar(self, estado_movimiento):
         pass
-
 
 
 class Personaje(Figura):
@@ -122,12 +119,12 @@ class FiguraOpcion(Figura):
     def dibujar(self, ventana):
         if(self.visibilidad):
             ventana.blit(self.imagen, self.posicion.getPosicion())
-    
-    def setVisibilidad(self):
+
+    def setVisibilidad(self, esVisible):
         #print("Antes del set: ", self.visibilidad)
-        self.visibilidad = not self.visibilidad
+        self.visibilidad = esVisible
         #print("Luego del set Antes: ", self.visibilidad)
-            
+
     def mover(self):
         pass
 
@@ -139,7 +136,6 @@ class Marcador(Figura):
             self.imagen, settings["tamañoMarcador"])
         self.posicion = posicion
         self.puntaje = puntaje
-
 
     def dibujar(self, ventana):
         ventana.blit(self.imagen, self.posicion.getPosicion())
@@ -158,7 +154,6 @@ class Mapa(Figura):
         self.dictFiguras['figuraOpcion'] = list()
         self.dictFiguras['personaje'] = None
 
-
     def agregarFigura(self, figura):
         if isinstance(figura, Camino):
             self.dictFiguras['camino'] = figura
@@ -172,10 +167,10 @@ class Mapa(Figura):
             self.dictFiguras['figuraVida'] = figura
         elif isinstance(figura, FiguraOpcion):
             self.dictFiguras['figuraOpcion'].append(figura)
-    
+
     def accederLista(self):
         return self.dictFiguras
-        
+
     def dibujar(self, ventana):
         for key in self.dictFiguras:
             if key != 'figuraOpcion' and key != 'personaje':
@@ -183,8 +178,7 @@ class Mapa(Figura):
         for opcion in self.dictFiguras['figuraOpcion']:
             opcion.dibujar(ventana)
         self.dictFiguras['personaje'].dibujar(ventana)
-            
+
     def mover(self, ventana):
         self.dictFiguras['camino'].mover(10, ventana)
         self.dictFiguras['personaje'].mover()
-        
