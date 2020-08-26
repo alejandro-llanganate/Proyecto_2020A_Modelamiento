@@ -1,8 +1,9 @@
 from figuras import *
 
 class Solapamiento:
-    def __init__(self):
+    def __init__(self, audioPregunta):
         self.mapa = Mapa()
+        self.audioPregunta = audioPregunta
         
     def verificar(self):
         pass

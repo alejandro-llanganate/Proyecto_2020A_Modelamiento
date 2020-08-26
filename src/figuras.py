@@ -1,6 +1,7 @@
 import pygame
 from abc import ABC, abstractmethod
 from listener import *
+from audioPregunta import *
 from assets.herramientas import *
 from assets.settings import *
 
@@ -39,8 +40,10 @@ class Camino(Figura):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
+        #self.listaAudioPreguntas = listaAudioPreguntas
         self.posicion = posicion
         #super().__init__(posicion)
+        
 
     def dibujar(self, ventana):
         posicion = self.posicion.getPosicion()
@@ -94,21 +97,6 @@ class Personaje(Figura):
                 1]-tamañoImagen.height/2)
 
 
-class FiguraPregunta(Figura):
-    def __init__(self, imagen, posicion, contenido):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
-        self.imagen = pygame.transform.scale(
-            self.imagen, settings["tamañoFigPregunta"])
-        self.posicion = posicion
-        self.contenido = contenido
-
-    def dibujar(self, ventana):
-        ventana.blit(self.imagen, self.posicion.getPosicion())
-
-    def mover(self):
-        pass
-
-
 class FiguraVida(Figura):
     def __init__(self, imagen, posicion):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
@@ -129,10 +117,17 @@ class FiguraOpcion(Figura):
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoOpcion"])
         self.posicion = posicion
+        self.visibilidad = False
 
     def dibujar(self, ventana):
-        ventana.blit(self.imagen, self.posicion.getPosicion())
-
+        if(self.visibilidad):
+            ventana.blit(self.imagen, self.posicion.getPosicion())
+    
+    def setVisibilidad(self):
+        print("Antes del set: ", self.visibilidad)
+        self.visibilidad = not self.visibilidad
+        print("Luego del set Antes: ", self.visibilidad)
+            
     def mover(self):
         pass
 
@@ -162,7 +157,6 @@ class Mapa(Figura):
         self.dictFiguras['figuraVida'] = None
         self.dictFiguras['figuraOpcion'] = list()
         self.dictFiguras['personaje'] = None
-        self.dictFiguras['figuraPregunta'] = None
 
 
     def agregarFigura(self, figura):
@@ -176,8 +170,6 @@ class Mapa(Figura):
             self.dictFiguras['personaje'] = figura
         elif isinstance(figura, FiguraVida):
             self.dictFiguras['figuraVida'] = figura
-        elif isinstance(figura, FiguraPregunta):
-            self.dictFiguras['figuraPregunta'] = figura
         elif isinstance(figura, FiguraOpcion):
             self.dictFiguras['figuraOpcion'].append(figura)
     
