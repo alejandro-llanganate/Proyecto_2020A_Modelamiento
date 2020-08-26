@@ -30,8 +30,10 @@ mensajeInstrucciones.mostrar(ventana)
 
 mapa = Mapa()
 
+camino = Camino('img/fondoCamino.png',Posicion(settings["coordenadaCamino"]))
+
 mapa.agregarFigura(Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
-mapa.agregarFigura(Camino('img/fondoCamino.png',Posicion(settings["coordenadaCamino"])))
+mapa.agregarFigura(camino)
 mapa.agregarFigura(FiguraVida('img/vida4.png', Posicion(settings["coordenadaFigVida"])))
 mapa.agregarFigura(Marcador('img/pregunta.png', Posicion(settings["coordenadaMarcador"]), 0))
 mapa.agregarFigura(Personaje('img/personaje.png', Posicion(settings["coordenadaPersonaje"])))
@@ -49,19 +51,19 @@ rutamayainiciado = True
 estadomensajebienvenida = True
 
 
-audio_prueba_sonido = AudioPregunta('p1.mp3', "B")
 SONG_END = pygame.USEREVENT + 1
 pygame.mixer.music.set_endevent(SONG_END)
-audio_prueba_sonido.reproducir()
 
+audio_prueba_sonido = AudioPregunta('sounds/p1.mp3', "B")
+
+audio_prueba_sonido.reproducir()
 
 while rutamayainiciado:
     mapa.mover(ventana)
     mapa.dibujar(ventana)
     for event in pygame.event.get():
         if event.type == SONG_END:
-            audio_prueba_sonido.notificarFinPregunta(
-                [opcionA, opcionB, opcionC])
+            audio_prueba_sonido.notificarFinPregunta([opcionA, opcionB, opcionC])
         if event.type == pygame.QUIT:
             rutamayainiciado = False
         pass

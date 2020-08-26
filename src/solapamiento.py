@@ -5,6 +5,7 @@ class Solapamiento:
         self.mapa = Mapa()
         self.audioPregunta = audioPregunta
         
+        
     def verificar(self):
         pass
 
