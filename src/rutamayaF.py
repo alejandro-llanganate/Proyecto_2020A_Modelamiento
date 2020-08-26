@@ -11,7 +11,6 @@ from time import time
 
 pygame.init()
 
-
 ventana = pygame.display.set_mode(settings["tamañoVentana"])
 
 # Mensajes iniciales GUI
@@ -52,7 +51,7 @@ rutamayainiciado = True
 estadomensajebienvenida = True
 
 
-audio_prueba_sonido = AudioPregunta('sounds/p1.wav', "B", [opcionA, opcionB, opcionC])
+audio_prueba_sonido = AudioPregunta('sounds/p1.wav', "B", mapa.obtenerOpciones())
 
 
 while rutamayainiciado:

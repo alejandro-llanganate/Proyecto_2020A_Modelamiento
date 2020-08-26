@@ -9,24 +9,23 @@ class AudioPregunta:
         self.audio = pygame.mixer.Sound(obtenerPathAbsoluto(audio, __file__))
         self.letraRespuesta = letraRespuesta
         self.opciones = opciones
-        self.state = True
+        self.estadoReproducido = True
 
     def reproducir(self, camino):
         keys = pygame.key.get_pressed()
-
         if(keys[pygame.K_s] and camino.notificar() == False):
-            self.state = False
+            self.estadoReproducido = False
         
-        if(self.state and camino.notificar() == False):
+        if(self.estadoReproducido and camino.notificar() == False):
             self.audio.play()
 
-        if(self.state == False and camino.notificar() == False):
+        if(self.estadoReproducido == False and camino.notificar() == False):
             pygame.mixer.stop()
             for opcion in self.opciones:
                 opcion.setVisibilidad(True)
 
-    def setState(value):
-        self.state = value
+    def setEstadoReproducido(self, value):
+        self.estadoReproducido = value
     
     def getLetraRespuesta(self):
         return self.letraRespuesta

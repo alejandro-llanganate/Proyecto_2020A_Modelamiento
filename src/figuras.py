@@ -91,7 +91,7 @@ class FiguraVida(Figura):
     def __init__(self, posicion):
         self.imagen = None
         self.posicion = posicion
-        self.numeroVidas = 4
+        self.numeroVidas = 1
 
     def dibujar(self, ventana):
         if(self.numeroVidas == 4):
@@ -106,6 +106,10 @@ class FiguraVida(Figura):
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida0.png', __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoFigVida"])
         ventana.blit(self.imagen, self.posicion.getPosicion())
+    
+    def setNumeroVidas(self, numero):
+        self.numeroVidas = numero
+
 
     def mover(self):
         pass
@@ -182,3 +186,7 @@ class Mapa(Figura):
         self.dictFiguras['camino'].mover(10, ventana)
         self.dictFiguras['personaje'].mover()
         pygame.mouse.set_visible(False)
+
+    def obtenerOpciones(self):
+        return self.dictFiguras['figuraOpcion']
+
