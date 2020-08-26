@@ -4,6 +4,7 @@ from assets.herramientas import *
 from assets.settings import *
 from listener import *
 from audioPregunta import *
+from solapamiento import *
 
 class Figura(ABC):
     def __init__(self, posicion):
@@ -68,9 +69,11 @@ class Camino(Figura):
 
 
 class Personaje(Figura):
-    def __init__(self, imagen, posicion):
+
+    def __init__(self, imagen, posicion, solapamiento):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(self.imagen, (128, 128))
+        self.solapamiento = solapamiento
         super().__init__(posicion)
 
     def dibujar(self, ventana):
@@ -85,6 +88,8 @@ class Personaje(Figura):
         if(condicionLimiteX and condicionLimiteY):
             self.posicion.actualizarX(Listener.captarMouse()[0]-tamañoImagen.width/2)
             self.posicion.actualizarY(Listener.captarMouse()[1]-tamañoImagen.height/2)
+        for solapamiento in self.solapamiento:
+            solapamiento.verificar(self.posicion.getPosicion())    
 
 
 class FiguraVida(Figura):
@@ -116,10 +121,12 @@ class FiguraVida(Figura):
 
 
 class FiguraOpcion(Figura):
-    def __init__(self, imagen, posicion):
+    def __init__(self, imagen, posicion, letraAsociada, solapamiento):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoOpcion"])
         self.posicion = posicion
+        self.letraAsociada = letraAsociada
+        self.solapamiento = solapamiento
         self.visibilidad = False
 
     def dibujar(self, ventana):
@@ -131,6 +138,10 @@ class FiguraOpcion(Figura):
 
     def mover(self):
         pass
+
+    def notificar(self):
+        if (self.visibilidad == True):
+            self.solapamiento.actualizar(self.posicion.getPosicion())
 
 
 class Marcador(Figura):
@@ -180,6 +191,7 @@ class Mapa(Figura):
                 self.dictFiguras[key].dibujar(ventana)
         for opcion in self.dictFiguras['figuraOpcion']:
             opcion.dibujar(ventana)
+            opcion.notificar()
         self.dictFiguras['personaje'].dibujar(ventana)
 
     def mover(self, ventana):

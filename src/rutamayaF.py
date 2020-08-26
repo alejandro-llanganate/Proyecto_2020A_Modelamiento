@@ -3,6 +3,7 @@ import pygame
 from figuras import *
 from posicion import *
 from mensaje import *
+from solapamiento import *
 from assets.settings import *
 from boton import *
 from audioPregunta import *
@@ -29,6 +30,11 @@ mensajeInstrucciones.mostrar(ventana)
 
 mapa = Mapa()
 
+solapamientoJuego1 = Solapamiento(30)
+solapamientoJuego2 = Solapamiento(30)
+solapamientoJuego3 = Solapamiento(30)
+solapamientos = [solapamientoJuego1,solapamientoJuego2,solapamientoJuego3]
+
 
 camino = Camino('img/fondoCamino.png',Posicion(settings["coordenadaCamino"]))
 
@@ -36,11 +42,11 @@ mapa.agregarFigura(Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFond
 mapa.agregarFigura(camino)
 mapa.agregarFigura(FiguraVida(Posicion(settings["coordenadaFigVida"])))
 mapa.agregarFigura(Marcador('img/pregunta.png', Posicion(settings["coordenadaMarcador"]), 0))
-mapa.agregarFigura(Personaje('img/personaje.png', Posicion(settings["coordenadaPersonaje"])))
+mapa.agregarFigura(Personaje('img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientos))
 
-opcionA = FiguraOpcion('img/botonA.png', Posicion(settings["coordenadaOpcion"][0]))
-opcionB = FiguraOpcion('img/botonB.png', Posicion(settings["coordenadaOpcion"][1]))
-opcionC = FiguraOpcion('img/botonC.png', Posicion(settings["coordenadaOpcion"][2]))
+opcionA = FiguraOpcion('img/botonA.png', Posicion(settings["coordenadaOpcion"][0]), "A", solapamientoJuego1)
+opcionB = FiguraOpcion('img/botonB.png', Posicion(settings["coordenadaOpcion"][1]), "B", solapamientoJuego2)
+opcionC = FiguraOpcion('img/botonC.png', Posicion(settings["coordenadaOpcion"][2]), "C", solapamientoJuego3)
 
 mapa.agregarFigura(opcionA)
 mapa.agregarFigura(opcionB)
@@ -53,7 +59,6 @@ estadomensajebienvenida = True
 
 audio_prueba_sonido = AudioPregunta('sounds/p1.wav', "B", mapa.obtenerOpciones())
 
-
 while rutamayainiciado:
     mapa.mover(ventana)
     mapa.dibujar(ventana)
@@ -63,3 +68,4 @@ while rutamayainiciado:
             rutamayainiciado = False
         pass
     pygame.display.update()
+
