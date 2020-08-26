@@ -121,9 +121,7 @@ class FiguraOpcion(Figura):
             ventana.blit(self.imagen, self.posicion.getPosicion())
 
     def setVisibilidad(self, esVisible):
-        #print("Antes del set: ", self.visibilidad)
         self.visibilidad = esVisible
-        #print("Luego del set Antes: ", self.visibilidad)
 
     def mover(self):
         pass
@@ -182,3 +180,4 @@ class Mapa(Figura):
     def mover(self, ventana):
         self.dictFiguras['camino'].mover(10, ventana)
         self.dictFiguras['personaje'].mover()
+        pygame.mouse.set_visible(False)

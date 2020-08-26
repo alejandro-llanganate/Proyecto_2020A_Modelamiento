@@ -8,28 +8,15 @@ pygame.init()
 
 
 class AudioPregunta:
-    def __init__(self, audio, letraRespuesta, figuraOpcion):
-        self.audio = audio
+    def __init__(self, audio, letraRespuesta):
+        self.audio = obtenerPathAbsoluto(audio, __file__)
         self.letraRespuesta = letraRespuesta
-        self.figuraOpcion = figuraOpcion
 
-    def cargarAudio(self):
-        self.audio = pygame.mixer.Sound(
-            obtenerPathAbsoluto("p1.wav", __file__))
-
-    def reproducir(self, opciones, tiempo):
-        #print("Pos: ", self.audio.get_pos())
-        #print("Remaining: ", (self.audio.get_length() - self.audio.get_pos())*-1)
-        # if(tiempo < self.audio.get_length()):
-        # self.audio.play(-1)
-        # else:
-        # pygame.mixer.stop()
-        # for opcion in opciones:
-        # opcion.setVisibilidad(True)
-        pygame.mixer.music.load(obtenerPathAbsoluto('p1.mp3', __file__))
+    def reproducir(self):
+        pygame.mixer.music.load(self.audio)
         pygame.mixer.music.play(0)
 
-    def dibujarOpciones(self, opciones):
+    def notificarFinPregunta(self, opciones):
         for opcion in opciones:
             opcion.setVisibilidad(True)
 
