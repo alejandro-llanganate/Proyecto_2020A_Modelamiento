@@ -124,9 +124,9 @@ class FiguraOpcion(Figura):
             ventana.blit(self.imagen, self.posicion.getPosicion())
     
     def setVisibilidad(self):
-        print("Antes del set: ", self.visibilidad)
+        #print("Antes del set: ", self.visibilidad)
         self.visibilidad = not self.visibilidad
-        print("Luego del set Antes: ", self.visibilidad)
+        #print("Luego del set Antes: ", self.visibilidad)
             
     def mover(self):
         pass
