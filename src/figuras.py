@@ -38,13 +38,10 @@ class Camino(Figura):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
-        #self.listaAudioPreguntas = listaAudioPreguntas
-        self.posicion = posicion
         self.estadoMovimiento = True;
-        # super().__init__(posicion)
+        super().__init__(posicion)
 
     def dibujar(self, ventana):
-        print(self.estadoMovimiento)
         posicion = self.posicion.getPosicion()
         ventana.blit(self.imagen, (posicion[0], settings["tamañoCamino"][1]))
 
@@ -62,14 +59,12 @@ class Camino(Figura):
             else:
                 ventana.blit(self.imagen, settings["coordenadaCamino"])
                 self.estadoMovimiento = False
-                
         else:
             ventana.blit(self.imagen, settings["coordenadaCamino"])
 
     def notificar(self):
         if(self.estadoMovimiento == False):
             return self.estadoMovimiento
-
 
 
 class Personaje(Figura):
@@ -93,13 +88,23 @@ class Personaje(Figura):
 
 
 class FiguraVida(Figura):
-    def __init__(self, imagen, posicion):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
-        self.imagen = pygame.transform.scale(
-            self.imagen, settings["tamañoFigVida"])
+    def __init__(self, posicion):
+        self.imagen = None
         self.posicion = posicion
+        self.numeroVidas = 4
 
     def dibujar(self, ventana):
+        if(self.numeroVidas == 4):
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida4.png', __file__))
+        elif(self.numeroVidas == 3):
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida3.png', __file__))
+        elif(self.numeroVidas == 2):
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida2.png', __file__))
+        elif(self.numeroVidas == 1):
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida1.png', __file__))
+        else:
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida0.png', __file__))
+        self.imagen = pygame.transform.scale(self.imagen, settings["tamañoFigVida"])
         ventana.blit(self.imagen, self.posicion.getPosicion())
 
     def mover(self):

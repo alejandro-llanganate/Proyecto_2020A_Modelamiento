@@ -35,7 +35,7 @@ camino = Camino('img/fondoCamino.png',Posicion(settings["coordenadaCamino"]))
 
 mapa.agregarFigura(Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
 mapa.agregarFigura(camino)
-mapa.agregarFigura(FiguraVida('img/vida4.png', Posicion(settings["coordenadaFigVida"])))
+mapa.agregarFigura(FiguraVida(Posicion(settings["coordenadaFigVida"])))
 mapa.agregarFigura(Marcador('img/pregunta.png', Posicion(settings["coordenadaMarcador"]), 0))
 mapa.agregarFigura(Personaje('img/personaje.png', Posicion(settings["coordenadaPersonaje"])))
 
