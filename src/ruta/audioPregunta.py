@@ -20,13 +20,14 @@ class AudioPregunta:
         if(self.estadoReproducido and camino.notificar() == False):
             self.audio.play()
 
-        if(self.estadoReproducido == False and camino.notificar() == False):
+        if(self.estadoReproducido == False and camino.notificar() == False ):
             pygame.mixer.stop()
             for opcion in self.opciones:
-                opcion.setVisibilidad(True)
+                if opcion.obtenerVisibilidad() == False:
+                    opcion.setVisibilidad(True)
 
     def setEstadoReproducido(self, value):
         self.estadoReproducido = value
     
-    def getLetraRespuesta(self):
+    def obtenerLetraRespuesta(self):
         return self.letraRespuesta

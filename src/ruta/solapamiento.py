@@ -1,10 +1,14 @@
 from ruta.figuras import *
+from ruta.verificacion import *
 import math
 
 class SolapamientoRuta:
-    def __init__(self, umbral):
+    def __init__(self, umbral, verificacion):
         self.umbral = umbral
+        self.opcion = None
         self.posicionOpcion = None
+        self.letraSeleccionada = None
+        self.verificacion = verificacion
         
     def verificar(self, posicionJugador):
         if self.posicionOpcion != None:
@@ -12,15 +16,8 @@ class SolapamientoRuta:
             (x2, y2) = self.posicionOpcion
             distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2))
             if distancia <= self.umbral:
-                print("solapamiento chugcha")
+                self.verificacion.verificarSeleccion(self.letraSeleccionada)
     
-    def actualizar(self, posicionOpcion):
+    def actualizar(self, posicionOpcion, letra):
+        self.letraSeleccionada = letra
         self.posicionOpcion = posicionOpcion
-
-
-                
-
-    
-
-
-

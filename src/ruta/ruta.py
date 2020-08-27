@@ -37,19 +37,23 @@ class Ruta(Juego):
         mensajeBienvenida.mostrar(self.ventana)
         mensajeInstrucciones.mostrar(self.ventana)
 
-
         mapa = Mapa()
 
-        solapamientoOpcionA = SolapamientoRuta(30)
-        solapamientoOpcionB = SolapamientoRuta(30)
-        solapamientoOpcionC = SolapamientoRuta(30)
+        audioPruebaSonido = AudioPregunta('sounds/p1.wav', "A", mapa.obtenerOpciones())
+
+        verificacion = VerificacionRuta(audioPruebaSonido, mapa)
+
+        solapamientoOpcionA = SolapamientoRuta(30, verificacion)
+        solapamientoOpcionB = SolapamientoRuta(30, verificacion)
+        solapamientoOpcionC = SolapamientoRuta(30, verificacion)
+
         solapamientos = [solapamientoOpcionA,solapamientoOpcionB,solapamientoOpcionC]
 
         mapa.agregarFigura(Fondo('img/fondoJuego.png', PosicionRuta(settings["coordenadaFondo"])))
         camino = Camino('img/fondoCamino.png',PosicionRuta(settings["coordenadaCamino"]))
         mapa.agregarFigura(camino)
         mapa.agregarFigura(FiguraVida(PosicionRuta(settings["coordenadaFigVida"])))
-        mapa.agregarFigura(Marcador('img/pregunta.png', PosicionRuta(settings["coordenadaMarcador"]), 0))
+        mapa.agregarFigura(Marcador('img/marcador.png', PosicionRuta(settings["coordenadaMarcador"]), 0))
         mapa.agregarFigura(Personaje('img/personaje.png', PosicionRuta(settings["coordenadaPersonaje"]), solapamientos))
 
         opcionA = FiguraOpcion('img/botonA.png', PosicionRuta(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)
@@ -61,12 +65,11 @@ class Ruta(Juego):
         mapa.agregarFigura(opcionC)
 
 
-        audio_prueba_sonido = AudioPregunta('sounds/p1.wav', "B", mapa.obtenerOpciones())
 
         while rutamayainiciado:
             mapa.mover(self.ventana)
             mapa.dibujar(self.ventana)
-            audio_prueba_sonido.reproducir(camino)
+            audioPruebaSonido.reproducir(camino)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     rutamayainiciado = False

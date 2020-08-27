@@ -39,7 +39,7 @@ class Camino(Figura):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
-        self.estadoMovimiento = True;
+        self.estadoMovimiento = True
         super().__init__(posicion)
 
     def dibujar(self, ventana):
@@ -96,7 +96,7 @@ class FiguraVida(Figura):
     def __init__(self, posicion):
         self.imagen = None
         self.posicion = posicion
-        self.numeroVidas = 1
+        self.numeroVidas = 4
 
     def dibujar(self, ventana):
         if(self.numeroVidas == 4):
@@ -108,12 +108,12 @@ class FiguraVida(Figura):
         elif(self.numeroVidas == 1):
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida1.png', __file__))
         else:
-            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida0.png', __file__))
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/vida3.png', __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoFigVida"])
         ventana.blit(self.imagen, self.posicion.getPosicion())
     
-    def setNumeroVidas(self, numero):
-        self.numeroVidas = numero
+    def disminuirVidas(self):
+        self.numeroVidas = self.numeroVidas - 1
 
 
     def mover(self):
@@ -130,7 +130,7 @@ class FiguraOpcion(Figura):
         self.visibilidad = False
 
     def dibujar(self, ventana):
-        if(self.visibilidad):
+        if(self.visibilidad == True):
             ventana.blit(self.imagen, self.posicion.getPosicion())
 
     def setVisibilidad(self, esVisible):
@@ -141,7 +141,14 @@ class FiguraOpcion(Figura):
 
     def notificar(self):
         if (self.visibilidad == True):
-            self.solapamiento.actualizar(self.posicion.getPosicion())
+            self.solapamiento.actualizar(self.posicion.getPosicion(), self.getLetraAsociada())
+
+    def getLetraAsociada(self):
+        return self.letraAsociada
+
+    def obtenerVisibilidad(self):
+        return self.visibilidad
+
 
 
 class Marcador(Figura):
@@ -198,4 +205,12 @@ class Mapa(Figura):
 
     def obtenerOpciones(self):
         return self.dictFiguras['figuraOpcion']
+    
+    def actualizar(self, comprobacion):
+        if(comprobacion == True): 
+            pass
+        else:
+            self.dictFiguras['figuraVida'].disminuirVidas()
+            pass
+            
 
