@@ -4,7 +4,7 @@ from ruta.assets.herramientas import *
 from ruta.posicionMaya import *
 
 
-class BotonRuta:
+class Boton:
     def __init__(self, tipo, posicion):
         self.tipo = tipo
         

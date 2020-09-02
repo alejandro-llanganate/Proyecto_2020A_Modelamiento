@@ -1,5 +1,5 @@
 
-class PuntajeRuta:
+class Puntaje:
     def __init__(self,numeroFallos,puntos):
         self.numeroFallos = numeroFallos
         self.puntos = puntos

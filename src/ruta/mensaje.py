@@ -5,7 +5,7 @@ from ruta.assets.herramientas import *
 import sys
 
 
-class MensajeRuta:
+class Mensaje:
     def __init__(self, imagen, posicion):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(

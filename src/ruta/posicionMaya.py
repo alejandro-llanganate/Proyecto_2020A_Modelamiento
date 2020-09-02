@@ -1,4 +1,4 @@
-class PosicionRuta:
+class Posicion:
     def __init__(self, tupla):
         self.x, self.y = tupla[0], tupla[1]
 

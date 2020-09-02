@@ -2,7 +2,7 @@ from ruta.figuras import *
 from ruta.verificacion import *
 import math
 
-class SolapamientoRuta:
+class Solapamiento:
     def __init__(self, umbral, verificacion):
         self.umbral = umbral
         self.posicionOpcion = None

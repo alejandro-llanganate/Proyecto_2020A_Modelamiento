@@ -81,14 +81,14 @@ class Personaje(Figura):
         ventana.blit(self.imagen, self.posicion.getPosicion())
 
     def mover(self):
-        x, y = ListenerRuta.captarMouse()
+        x, y = Listener.captarMouse()
         tamañoImagen = self.imagen.get_rect()
         distanciaVereda = (settings["tamañoVentana"][0] - settings["tamañoCamino"][0])/2
         condicionLimiteX = x >= distanciaVereda and x <= settings["tamañoVentana"][0] - distanciaVereda
         condicionLimiteY = y >= settings["tamañoVentana"][1] * 0.1 and y <= settings["tamañoVentana"][1]*0.9
         if(condicionLimiteX and condicionLimiteY):
-            self.posicion.actualizarX(ListenerRuta.captarMouse()[0]-tamañoImagen.width/2)
-            self.posicion.actualizarY(ListenerRuta.captarMouse()[1]-tamañoImagen.height/2)
+            self.posicion.actualizarX(Listener.captarMouse()[0]-tamañoImagen.width/2)
+            self.posicion.actualizarY(Listener.captarMouse()[1]-tamañoImagen.height/2)
         for solapamiento in self.solapamiento:
             solapamiento.verificar(self.posicion.getPosicion())    
 

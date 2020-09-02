@@ -16,20 +16,20 @@ sys.path.append('../juego.py')
 class Ruta(Juego):
     def __init__(self):
         self.mapa = Mapa
-        self.puntaje = PuntajeRuta        
+        self.puntaje = Puntaje       
 
     def mostrarMensajesIniciales(self):
         self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
            # Mensajes iniciales GUI
-        mensajeBienvenida = MensajeRuta(
-            'img/fondoBienvenida.png', PosicionRuta((0, 0)))
-        mensajeInstrucciones = MensajeRuta(
-            'img/fondoInstrucciones.png', PosicionRuta((0, 0)))
-        btnJugar = BotonRuta('JUGAR', PosicionRuta(
+        mensajeBienvenida = Mensaje(
+            'img/fondoBienvenida.png', Posicion((0, 0)))
+        mensajeInstrucciones = Mensaje(
+            'img/fondoInstrucciones.png', Posicion((0, 0)))
+        btnJugar = Boton('JUGAR', Posicion(
             settings["coordenadaBotonJugar"]))
-        btnAtras = BotonRuta('ATRAS', PosicionRuta(
+        btnAtras = Boton('ATRAS', Posicion(
             settings["coordenadaBotonAtras"]))
-        btnOk = BotonRuta('OK', PosicionRuta(settings["coordenadaBotonOk"]))
+        btnOk = Boton('OK', Posicion(settings["coordenadaBotonOk"]))
         mensajeBienvenida.agregarBoton(btnJugar)
         mensajeBienvenida.agregarBoton(btnAtras)
         mensajeInstrucciones.agregarBoton(btnOk)
@@ -48,33 +48,33 @@ class Ruta(Juego):
 
         audioPruebaSonido = AudioPregunta('sounds/p1.wav', "A")
 
-        verificacion = VerificacionRuta(audioPruebaSonido, self.mapa)
+        verificacion = Verificacion(audioPruebaSonido, self.mapa)
 
-        solapamientoOpcionA = SolapamientoRuta(30, verificacion)
-        solapamientoOpcionB = SolapamientoRuta(30, verificacion)
-        solapamientoOpcionC = SolapamientoRuta(30, verificacion)
+        solapamientoOpcionA = Solapamiento(30, verificacion)
+        solapamientoOpcionB = Solapamiento(30, verificacion)
+        solapamientoOpcionC = Solapamiento(30, verificacion)
 
         solapamientos = [solapamientoOpcionA,
                          solapamientoOpcionB, solapamientoOpcionC]
 
         self.mapa.agregarFigura(
-            Fondo('img/fondoJuego.png', PosicionRuta(settings["coordenadaFondo"])))
+            Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
         camino = Camino('img/fondoCamino.png',
-                        PosicionRuta(settings["coordenadaCamino"]))
+                        Posicion(settings["coordenadaCamino"]))
         self.mapa.agregarFigura(camino)
         self.mapa.agregarFigura(FiguraVida(
-            PosicionRuta(settings["coordenadaFigVida"])))
+            Posicion(settings["coordenadaFigVida"])))
         self.mapa.agregarFigura(Marcador('img/marcador.png',
-                                    PosicionRuta(settings["coordenadaMarcador"]), 0))
+                                    Posicion(settings["coordenadaMarcador"]), 0))
         self.mapa.agregarFigura(Personaje(
-            'img/personaje.png', PosicionRuta(settings["coordenadaPersonaje"]), solapamientos))
+            'img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientos))
 
         opcionA = FiguraOpcion(
-            'img/botonA.png', PosicionRuta(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)
+            'img/botonA.png', Posicion(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)
         opcionB = FiguraOpcion(
-            'img/botonB.png', PosicionRuta(settings["coordenadaOpcion"][1]), "B", solapamientoOpcionB)
+            'img/botonB.png', Posicion(settings["coordenadaOpcion"][1]), "B", solapamientoOpcionB)
         opcionC = FiguraOpcion(
-            'img/botonC.png', PosicionRuta(settings["coordenadaOpcion"][2]), "C", solapamientoOpcionC)
+            'img/botonC.png', Posicion(settings["coordenadaOpcion"][2]), "C", solapamientoOpcionC)
 
         self.mapa.agregarFigura(opcionA)
         self.mapa.agregarFigura(opcionB)
