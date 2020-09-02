@@ -3,7 +3,7 @@ import pygame
 pygame.init()
 
 
-class Listener:
+class ListenerLaberinto:
     @staticmethod
     def detectar() -> tuple:
         return pygame.key.get_pressed()

@@ -1,26 +1,35 @@
-from figuras import *
-import math
+from herramientas import *
 
 class Solapamiento:
-    def __init__(self, umbral):
-        self.umbral = umbral
-        self.posicionOpcion = None
-        
-    def verificar(self, posicionJugador):
-        if self.posicionOpcion != None:
-            (x1, y1) = posicionJugador
-            (x2, y2) = self.posicionOpcion
-            distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2))
-            if distancia <= self.umbral:
-                print("solapamiento chugcha")
-    
-    def actualizar(self, posicionOpcion):
-        self.posicionOpcion = posicionOpcion
 
+    def __init__(self, mapaMuseo):
+        self.mapa = mapaMuseo
 
-                
+    def verificar(self, posiblePos):
+        return self.verificarCamino(posiblePos) or self.verificarEstacion(posiblePos)
 
-    
+    def verificarCamino(self, posiblePos):
+        dict = self.mapa.accederLista()
+        for piso in dict['camino']:
+            if piso.obtenerPosicion() == posiblePos:
+                return True
+        return False
 
-
-
+    def verificarEstacion(self, posiblePos):
+        dict = self.mapa.accederLista()
+        for estacion in dict['estaciones']:
+            if estacion.obtenerPosicion() == posiblePos:
+                for mensaje in dict['mensaje']:
+                    if mensaje.getNombre() == estacion.getNombre():
+                        mensaje.permitirDibujo(True)
+                        try:
+                            ppNiña = open(obtenerPathAbsoluto("assets/ppNiña.txt"),"r")
+                            puntuacion = ppNiña.readline().split(",")[2]
+                            ppNiña.close()
+                            ppNiña = open(obtenerPathAbsoluto("assets/ppNiña.txt"),"w")
+                            ppNiña.write(str(posiblePos[0]) + "," + str(posiblePos[1]) + "," + str(puntuacion))
+                            ppNiña.close()
+                        except IOError:
+                            print("Error al manejar el archivo")
+                return True
+        return False

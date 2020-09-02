@@ -3,7 +3,7 @@ class Posicion:
         self.x = x
         self.y = y
 
-    def getPosicion(self):
+    def getCoordenadas(self):
         tupla = (self.x, self.y)
         return tupla
 

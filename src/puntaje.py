@@ -1,15 +1,13 @@
+class Puntaje():
+    def __init__(self, acumulador, maximo):
+        self.acumulador = acumulador
+        self.maximo = maximo
 
-class Puntaje:
-    def __init__(self,numeroFallos,puntos):
-        self.numeroFallos = numeroFallos
-        self.puntos = puntos
+    def aumentar(self, puntaje):
+        self.acumulador += puntaje
 
-    def incrementar(self):
-        pass
+    def getMaximo(self):
+        return self.maximo
 
-    def actualizar(self):
-        pass
-    
-    def get_puntaje(self):
-        return self.puntos
-        
+    def getAcumulador(self):
+        return self.acumulador

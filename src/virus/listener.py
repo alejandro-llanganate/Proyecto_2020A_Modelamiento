@@ -2,8 +2,6 @@ import pygame
 
 pygame.init()
 
-
-class Listener:
-    @staticmethod
-    def detectar() -> tuple:
+class Listener():
+    def detectar(self) -> tuple:
         return pygame.key.get_pressed()
