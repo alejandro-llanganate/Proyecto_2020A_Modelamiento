@@ -200,6 +200,7 @@ class Mapa(Figura):
         self.dictFiguras['personaje'].mover()
         pygame.mouse.set_visible(False)
 
+
     def obtenerOpciones(self):
         return self.dictFiguras['figuraOpcion']
     

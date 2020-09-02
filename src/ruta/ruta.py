@@ -10,6 +10,7 @@ from ruta.assets.settings import *
 from ruta.boton import *
 from ruta.audioPregunta import *
 from ruta.puntaje import *
+from ruta.factory import *
 sys.path.append('../juego.py')
 
 
@@ -79,6 +80,12 @@ class Ruta(Juego):
         self.mapa.agregarFigura(opcionA)
         self.mapa.agregarFigura(opcionB)
         self.mapa.agregarFigura(opcionC)
+
+        #instanciar obstaculos
+        fabrica = FabricaObstaculoA()
+
+
+
 
         while rutamayainiciado:
             self.mapa.mover(self.ventana)

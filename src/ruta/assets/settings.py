@@ -8,6 +8,8 @@ tamañoFigPregunta = int(ancho*0.5), int(alto*0.45)
 tamañoFigVida = int(ancho*0.18), int(alto*0.07)
 tamañoOpcion = int(ancho*0.1), int(alto*0.15)
 tamañoMarcador = int(ancho*0.18), int(alto*0.07)
+tamañoObstaculo = int(ancho*0.09), int(alto*0.09)
+
 
 #Coordenadas de Posicion de Botones GUI
 coordenadaBotonJugar = (ancho*0.7, alto*0.75)
@@ -35,6 +37,7 @@ settings = {
     "tamañoFigVida": tamañoFigVida,
     "tamañoOpcion": tamañoOpcion,
     "tamañoMarcador": tamañoMarcador,
+    "tamañoObstaculo": tamañoObstaculo,
     "coordenadaFondo": coordenadaFondo,
     "coordenadaCamino": coordenadaCamino,
     "coordenadaPersonaje": coordenadaPersonaje,
@@ -47,5 +50,5 @@ settings = {
     "coordenadaBotonOk": coordenadaBotonOk,
     "factorDesplazamiento": factorDesplazamiento,
     "nombre": "Juego Ruta Maya",
-    "icon": "",
+    "icon": ""
 }
