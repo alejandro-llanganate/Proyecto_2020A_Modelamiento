@@ -2,15 +2,16 @@ from juego import *
 import pygame
 import os
 import sys
+from ruta.assets.settings import *
 from ruta.figuras import *
+from ruta.solapamiento import *
 from ruta.posicionMaya import *
 from ruta.mensaje import *
-from ruta.solapamiento import *
-from ruta.assets.settings import *
 from ruta.boton import *
 from ruta.audioPregunta import *
 from ruta.puntaje import *
-from ruta.factory import *
+from ruta.fabricas import *
+
 sys.path.append('../juego.py')
 
 
@@ -21,7 +22,6 @@ class Ruta(Juego):
 
     def mostrarMensajesIniciales(self):
         self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
-           # Mensajes iniciales GUI
         mensajeBienvenida = Mensaje(
             'img/fondoBienvenida.png', Posicion((0, 0)))
         mensajeInstrucciones = Mensaje(
@@ -81,15 +81,13 @@ class Ruta(Juego):
         self.mapa.agregarFigura(opcionB)
         self.mapa.agregarFigura(opcionC)
 
-        #instanciar obstaculos
-        fabrica = FabricaObstaculoA()
-
-
+        obstaculo = FabricaObstaculoA().crearObstaculo('img/obstaculo.png', Posicion(settings["coordenadaObstaculo"]))
 
 
         while rutamayainiciado:
             self.mapa.mover(self.ventana)
             self.mapa.dibujar(self.ventana)
+            obstaculo.dibujar(self.ventana)
             audioPruebaSonido.reproducir(camino, self.mapa.obtenerOpciones())
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
