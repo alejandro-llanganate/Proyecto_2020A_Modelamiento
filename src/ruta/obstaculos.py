@@ -39,8 +39,6 @@ class ObstaculoB(Obstaculo):
 
     def mover(self):
         alturaImagen = self.imagen.get_height()
-        print("mover", self.posicion.getPosicion()[1])
-        print("Altura, ",settings["tamañoVentana"][1] )
         if (self.posicion.getPosicion()[1] >= (-settings["tamañoVentana"][1]-alturaImagen)): 
             self.posicion.actualizarY(self.posicion.getPosicion()[1]-settings["tamañoVentana"][1]*0.03)
         else:
