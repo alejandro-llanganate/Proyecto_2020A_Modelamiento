@@ -17,4 +17,4 @@ class FabricaObstaculoB(FabricaObstaculos):
         
 class FabricaObstaculoC(FabricaObstaculos):
     def crearObstaculo(self):
-        return ObstaculoB()
+        return ObstaculoC()
