@@ -8,10 +8,13 @@ class FabricaObstaculos:
         pass
 
 class FabricaObstaculoA(FabricaObstaculos):
-    def crearObstaculo(self, imagen, posicion):
-        return ObstaculoA(imagen, posicion)
+    def crearObstaculo(self):
+        return ObstaculoA()
 
 class FabricaObstaculoB(FabricaObstaculos):
-    def crearObstaculo(self, imagen, posicion):
-        return ObstaculoA(imagen, posicion)
+    def crearObstaculo(self):
+        return ObstaculoB()
         
+class FabricaObstaculoC(FabricaObstaculos):
+    def crearObstaculo(self):
+        return ObstaculoB()
