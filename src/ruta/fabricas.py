@@ -8,7 +8,6 @@ class FabricaObstaculos:
     def crearObstaculo(self):
         pass
 
-
 class FabricaObstaculoA(FabricaObstaculos):
     def crearObstaculo(self):
         return ObstaculoA()
@@ -21,10 +20,10 @@ class FabricaObstaculoC(FabricaObstaculos):
     def crearObstaculo(self):
         return ObstaculoC()
 
-class FabricaRandomica2(FabricaObstaculos):
+class FabricaRandomica(FabricaObstaculos):
     def crearObstaculo(self):
         listaObstaculos = []
-        for i in range (4):
+        for i in range (18):
             aleatorio = random.randrange(1,4)
             if aleatorio == 1:
                 obstaculo = ObstaculoA()

@@ -45,9 +45,9 @@ class Camino(Figura):
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
         self.estadoMovimiento = True
-
-        self.obs = FabricaRandomica2().crearObstaculo()
-        #self.obs = FabricaRandomica().crearObstaculo()
+        self.obs = FabricaRandomica().crearObstaculo()
+        self.i = 0 
+        print(self.obs)
         
               
     def dibujar(self, ventana):
@@ -66,37 +66,30 @@ class Camino(Figura):
                 if relativoY < settings['tamañoVentana'][1]:
                     ventana.blit(self.imagen, (x, relativoY))
                 self.posicion.actualizarY(y-desplazamiento)
-                print(self.obs)
                 
-                i = 0 
-                escogido = self.obs[i]
+         
+                escogido = self.obs[self.i]
                 escogido.dibujar(ventana)
                 escogido.mover()
-                print(escogido.posicion.getPosicion()[1])
-
-                if escogido.posicion.getPosicion()[1] < 0 and i==0:
+                if escogido.posicion.getPosicion()[1] < 0:
+                    self.i+=1
+                    escogido = self.obs[self.i]
+                    escogido.dibujar(ventana)
+                    escogido.mover()
+                if escogido.posicion.getPosicion()[1] < 0 and self.i==1:
                     i+=1
-                    escogido = self.obs[i]
+                    escogido = self.obs[self.i]
                     escogido.dibujar(ventana)
                     escogido.mover()
                 
-                if escogido.posicion.getPosicion()[1] < 0 and i==1:
-                    i+=1
-                    escogido = self.obs[i]
-                    escogido.dibujar(ventana)
-                    escogido.mover()
-
-                if escogido.posicion.getPosicion()[1] < 0 and i==2:
-                    i+=1
-                    escogido = self.obs[i]
-                    escogido.dibujar(ventana)
-                    escogido.mover()
+                    
+                
 
 
             else:
                 ventana.blit(self.imagen, settings["coordenadaCamino"])
                 self.estadoMovimiento = False
-                print('yoooooooooooooooooooooooo')
+            
         else:
             ventana.blit(self.imagen, settings["coordenadaCamino"])
 
