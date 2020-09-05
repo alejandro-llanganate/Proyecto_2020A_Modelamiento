@@ -26,7 +26,6 @@ while True:
     pygame.init()
     reloj = pygame.time.Clock()
 
-
     ven_dim = (s.columnas * s.dim_Cuadro, s.filas * s.dim_Cuadro)
 
     ven = pygame.display.set_mode(ven_dim)
@@ -68,9 +67,7 @@ while True:
     mapa.dibujar(ven)
 
     while True:
-
         reloj.tick(s.FPS)
-
         try:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

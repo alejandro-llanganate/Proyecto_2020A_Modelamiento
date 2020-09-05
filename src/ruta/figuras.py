@@ -5,6 +5,7 @@ from ruta.assets.settings import *
 from ruta.listener import *
 from ruta.audioPregunta import *
 from ruta.solapamiento import *
+from ruta.fabricas import *
 
 class Figura(ABC):
     def __init__(self, posicion):
@@ -34,18 +35,26 @@ class Fondo(Figura):
         pass
 
 
+
 class Camino(Figura):
-    def __init__(self, imagen, posicion):
+   
+
+    def __init__(self, imagen, posicion, obs):
         super().__init__(posicion)
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
         self.estadoMovimiento = True
+
+        self.obs = FabricaRandomica2().crearObstaculo()
+        #self.obs = FabricaRandomica().crearObstaculo()
         
+              
     def dibujar(self, ventana):
         posicion = self.posicion.getPosicion()
         ventana.blit(self.imagen, (posicion[0], settings["tamañoCamino"][1]))
-
+        
+      
     def mover(self, desplazamiento, ventana):
         if(self.estadoMovimiento):
             x, y = self.posicion.getPosicion()
@@ -57,11 +66,40 @@ class Camino(Figura):
                 if relativoY < settings['tamañoVentana'][1]:
                     ventana.blit(self.imagen, (x, relativoY))
                 self.posicion.actualizarY(y-desplazamiento)
+                print(self.obs)
+                
+                i = 0 
+                escogido = self.obs[i]
+                escogido.dibujar(ventana)
+                escogido.mover()
+                print(escogido.posicion.getPosicion()[1])
+
+                if escogido.posicion.getPosicion()[1] < 0 and i==0:
+                    i+=1
+                    escogido = self.obs[i]
+                    escogido.dibujar(ventana)
+                    escogido.mover()
+                
+                if escogido.posicion.getPosicion()[1] < 0 and i==1:
+                    i+=1
+                    escogido = self.obs[i]
+                    escogido.dibujar(ventana)
+                    escogido.mover()
+
+                if escogido.posicion.getPosicion()[1] < 0 and i==2:
+                    i+=1
+                    escogido = self.obs[i]
+                    escogido.dibujar(ventana)
+                    escogido.mover()
+
+
             else:
                 ventana.blit(self.imagen, settings["coordenadaCamino"])
                 self.estadoMovimiento = False
+                print('yoooooooooooooooooooooooo')
         else:
             ventana.blit(self.imagen, settings["coordenadaCamino"])
+
 
     def notificar(self):
         if(self.estadoMovimiento == False):
