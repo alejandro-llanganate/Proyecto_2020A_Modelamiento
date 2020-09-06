@@ -13,13 +13,19 @@ class Verificacion:
     def verificarSeleccion(self, letraSeleccionada):
         opciones = self.mapa.obtenerOpciones()
         if(self.respuestaPregunta == letraSeleccionada):
+            print("Si estoy valiendo :D")
             pygame.mixer.music.load(obtenerPathAbsoluto('sounds/sonidoRespuestaCorrecta.mp3', __file__))
             pygame.mixer.music.play(0)
             sleep(3)
             self.mapa.actualizar(True)
             self.puntaje.incrementar()
         else:
+            print("Si estoy valiendo :D")
             pygame.mixer.music.load(obtenerPathAbsoluto('sounds/sonidoRespuestaIncorrecta.mp3', __file__))
             pygame.mixer.music.play(0)
             sleep(3)
+            self.mapa.actualizar(False)
+
+    def notificarSolapamiento(self, valor):
+        if valor:
             self.mapa.actualizar(False)

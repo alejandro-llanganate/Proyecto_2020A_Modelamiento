@@ -53,9 +53,9 @@ class Ruta(Juego):
 
         puntaje = Puntaje(4, 1000)
 
-        audioPruebaSonido = AudioPregunta('sounds/p1.wav', "A")
-        pregunta2 = AudioPregunta('sounds/p1.wav', "A")
-        pregunta3 = AudioPregunta('sounds/p1.wav', "A")
+        audioPruebaSonido = AudioPregunta('sounds/p3v.wav', "A")
+        pregunta2 = AudioPregunta('sounds/p3v.wav', "A")
+        pregunta3 = AudioPregunta('sounds/p3v.wav', "A")
 
         preguntas = ListaAudiosPreguntas()
 
@@ -65,25 +65,25 @@ class Ruta(Juego):
 
         verificacion = Verificacion(audioPruebaSonido, self.mapa, puntaje)
 
-        solapamientoOpcionA = Solapamiento(30, verificacion)
-        solapamientoOpcionB = Solapamiento(30, verificacion)
-        solapamientoOpcionC = Solapamiento(30, verificacion)
+        solapamientoOpcionA = SolapamientoConOpcion(30, verificacion)
+        solapamientoOpcionB = SolapamientoConOpcion(30, verificacion)
+        solapamientoOpcionC = SolapamientoConOpcion(30, verificacion)
 
-        solapamientos = [solapamientoOpcionA,
+        solapamientosConOpcion = [solapamientoOpcionA,
                          solapamientoOpcionB, solapamientoOpcionC]
-
 
         self.mapa.agregarFigura(
             Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
         camino = Camino('img/fondoCamino.png',
                         Posicion(settings["coordenadaCamino"]))
+        solapamientoConObstaculo = SolapamientoConObstaculo(30, verificacion, camino)
         self.mapa.agregarFigura(camino)
         self.mapa.agregarFigura(FiguraVida(
             Posicion(settings["coordenadaFigVida"])))
         self.mapa.agregarFigura(Marcador('img/marcador.png',
                                     Posicion(settings["coordenadaMarcador"]), puntaje))
         self.mapa.agregarFigura(Personaje(
-            'img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientos))
+            'img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientosConOpcion, solapamientoConObstaculo))
 
         opcionA = FiguraOpcion(
             'img/botonA.png', Posicion(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)

@@ -82,6 +82,9 @@ class Camino(Figura):
         else:
             ventana.blit(self.imagen, settings["coordenadaCamino"])
 
+    def obtenerObstaculos(self):
+        return self.obs
+
 
 
     def notificar(self):
@@ -95,10 +98,11 @@ class Camino(Figura):
         return self.estadoMovimiento
 
 class Personaje(Figura):
-    def __init__(self, imagen, posicion, solapamiento):
+    def __init__(self, imagen, posicion, solapamientoConOpcion, solapamientoConObstaculo):
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoPersonaje"])
-        self.solapamiento = solapamiento
+        self.solapamientoConOpcion = solapamientoConOpcion
+        self.solapamientoConObstaculo = solapamientoConObstaculo
         super().__init__(posicion)
 
 
@@ -114,8 +118,10 @@ class Personaje(Figura):
         if(condicionLimiteX and condicionLimiteY):
             self.posicion.actualizarX(Listener.captarMouse()[0]-tamañoImagen.width/2)
             self.posicion.actualizarY(Listener.captarMouse()[1]-tamañoImagen.height/2)
-        for solapamiento in self.solapamiento:
-            solapamiento.verificar(self.posicion.getPosicion())    
+        for solapamiento in self.solapamientoConOpcion:
+            print("Si estoy llamando pero no vale")
+            solapamiento.verificarSolapamientoOpcion(self.posicion.getPosicion())  
+        self.solapamientoConObstaculo.verificarSolapamiento(self.posicion.getPosicion())
 
 
 class FiguraVida(Figura):
