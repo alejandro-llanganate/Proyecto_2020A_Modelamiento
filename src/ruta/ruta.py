@@ -96,20 +96,10 @@ class Ruta(Juego):
         self.mapa.agregarFigura(opcionB)
         self.mapa.agregarFigura(opcionC)
 
-        obstaculoA = FabricaObstaculoA().crearObstaculo()
-        obstaculoB = FabricaObstaculoB().crearObstaculo()
-        obstaculoC = FabricaObstaculoC().crearObstaculo()        
-
-
+        
         while rutamayainiciado:
             self.mapa.mover(self.ventana)
             self.mapa.dibujar(self.ventana)
-            obstaculoA.dibujar(self.ventana)
-            obstaculoB.dibujar(self.ventana)
-            obstaculoC.dibujar(self.ventana)
-            obstaculoA.mover()
-            obstaculoB.mover()
-            obstaculoC.mover()
             audioPruebaSonido.reproducir(camino, self.mapa.obtenerOpciones())
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

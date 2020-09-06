@@ -5,6 +5,8 @@ from ruta.assets.settings import *
 from ruta.listener import *
 from ruta.audioPregunta import *
 from ruta.solapamiento import *
+from ruta.fabricas import *
+
 
 
 class Figura(ABC):
@@ -42,6 +44,8 @@ class Camino(Figura):
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
         self.estadoMovimiento = True
+        self.obs = FabricaRandomica().crearObstaculo()
+        self.i = 0 
         
     def dibujar(self, ventana):
         posicion = self.posicion.getPosicion()
@@ -57,12 +61,28 @@ class Camino(Figura):
                 ventana.blit(self.imagen, (x, relativoY - alturaImagen))
                 if relativoY < settings['tamañoVentana'][1]:
                     ventana.blit(self.imagen, (x, relativoY))
-                self.posicion.actualizarY(y-settings["factorDesplazamiento"],)
+                self.posicion.actualizarY(y-settings["factorDesplazamiento"])
+
+                escogido = self.obs[self.i]
+                escogido.dibujar(ventana)
+                escogido.mover()
+                if escogido.posicion.getPosicion()[1] < 0:
+                    self.i+=1
+                    escogido = self.obs[self.i]
+                    escogido.dibujar(ventana)
+                    escogido.mover()
+                if escogido.posicion.getPosicion()[1] < 0 and self.i==1:
+                    i+=1
+                    escogido = self.obs[self.i]
+                    escogido.dibujar(ventana)
+                    escogido.mover()
             else:
                 self.estadoMovimiento = False
                 self.posicion.actualizarY(0)
         else:
             ventana.blit(self.imagen, settings["coordenadaCamino"])
+
+
 
     def notificar(self):
         if(self.estadoMovimiento == False):
