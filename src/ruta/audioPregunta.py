@@ -11,19 +11,18 @@ class AudioPregunta:
         self.letraRespuesta = letraRespuesta
         self.estadoReproducion = True
 
-    def reproducir(self, camino, opciones):
+    def reproducir(self, mensaje, opciones):
         keys = pygame.key.get_pressed()
-
-        if keys[pygame.K_s] and camino.notificar() == False:
+        if keys[pygame.K_s] and mensaje == False:
             self.estadoReproducion = False
             for opcion in opciones:
                 if opcion.obtenerVisibilidad() == False:
                     opcion.setVisibilidad(True)
         
-        if self.estadoReproducion and camino.notificar() == False:
+        if self.estadoReproducion and mensaje == False:
             self.audio.play()
 
-        if self.estadoReproducion == False and camino.notificar() == False:
+        if self.estadoReproducion == False and mensaje == False:
             pygame.mixer.stop()
     
     def setEstadoReproducido(self, value):
@@ -33,16 +32,16 @@ class AudioPregunta:
         return self.letraRespuesta
 
 
-class ListaAudiosPreguntas:
+class Playlist:
 
-    _preguntas = []
+    _ListaAudiosPreguntas = []
 
     def añadirAudioPregunta(self, pregunta):
         if isinstance(pregunta, AudioPregunta):
-            self._preguntas.append(pregunta)
+            self._ListaAudiosPreguntas.append(pregunta)
 
     def quitarAudioPregunta(self, pregunta):
-        self._preguntas.remove(pregunta)
+        self._ListaAudiosPreguntas.remove(pregunta)
     
     def obtenerAudiosPreguntas(self):
-        return self._preguntas
+        return self._ListaAudiosPreguntas

@@ -53,17 +53,19 @@ class Ruta(Juego):
 
         puntaje = Puntaje(4, 1000)
 
-        audioPruebaSonido = AudioPregunta('sounds/p3v.wav', "A")
-        pregunta2 = AudioPregunta('sounds/p3v.wav', "A")
-        pregunta3 = AudioPregunta('sounds/p3v.wav', "A")
+        pregunta1 = AudioPregunta('sounds/pregunta1.wav', "C")
+        pregunta2 = AudioPregunta('sounds/pregunta2.wav', "B")
+        pregunta3 = AudioPregunta('sounds/pregunta3.wav', "C")
+        pregunta4 = AudioPregunta('sounds/pregunta4.wav', "B")
 
-        preguntas = ListaAudiosPreguntas()
+        preguntas = Playlist()
 
-        preguntas.añadirAudioPregunta(audioPruebaSonido)
+        preguntas.añadirAudioPregunta(pregunta1)
         preguntas.añadirAudioPregunta(pregunta2)
         preguntas.añadirAudioPregunta(pregunta3)
+        preguntas.añadirAudioPregunta(pregunta4)
 
-        verificacion = Verificacion(audioPruebaSonido, self.mapa, puntaje)
+        verificacion = Verificacion(pregunta1, self.mapa, puntaje)
 
         solapamientoOpcionA = SolapamientoConOpcion(30, verificacion)
         solapamientoOpcionB = SolapamientoConOpcion(30, verificacion)
@@ -75,7 +77,7 @@ class Ruta(Juego):
         self.mapa.agregarFigura(
             Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
         camino = Camino('img/fondoCamino.png',
-                        Posicion(settings["coordenadaCamino"]))
+                        Posicion(settings["coordenadaCamino"]), preguntas)
         solapamientoConObstaculo = SolapamientoConObstaculo(30, verificacion, camino)
         self.mapa.agregarFigura(camino)
         self.mapa.agregarFigura(FiguraVida(
@@ -100,7 +102,7 @@ class Ruta(Juego):
         while rutamayainiciado:
             self.mapa.mover(self.ventana)
             self.mapa.dibujar(self.ventana)
-            audioPruebaSonido.reproducir(camino, self.mapa.obtenerOpciones())
+            #pregunta1.reproducir(camino, self.mapa.obtenerOpciones())
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     rutamayainiciado = False

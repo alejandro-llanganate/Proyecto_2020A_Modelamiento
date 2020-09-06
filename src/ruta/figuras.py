@@ -38,20 +38,23 @@ class Fondo(Figura):
 
 
 class Camino(Figura):
-    def __init__(self, imagen, posicion):
+    def __init__(self, imagen, posicion, playlist):
         super().__init__(posicion)
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
         self.imagen = pygame.transform.scale(
             self.imagen, settings["tamañoCamino"])
         self.estadoMovimiento = True
         self.obs = FabricaRandomica().crearObstaculo()
+        self.playlist = playlist
         self.i = 0 
+        self.iteradorAudioPregunta = -1
         
     def dibujar(self, ventana):
         posicion = self.posicion.getPosicion()
         ventana.blit(self.imagen, (posicion[0], settings["tamañoCamino"][1]))
+        
 
-    def mover(self, ventana):
+    def mover(self, ventana, opciones):
         if(self.estadoMovimiento):
             x, y = self.posicion.getPosicion()
             alturaImagen = self.imagen.get_rect().height
@@ -79,16 +82,18 @@ class Camino(Figura):
             else:
                 self.estadoMovimiento = False
                 self.posicion.actualizarY(0)
+                self.iteradorAudioPregunta = self.iteradorAudioPregunta + 1
+                
         else:
+            self.playlist.obtenerAudiosPreguntas()[self.iteradorAudioPregunta].reproducir(self.notificar(), opciones)
             ventana.blit(self.imagen, settings["coordenadaCamino"])
 
     def obtenerObstaculos(self):
         return self.obs
 
-
-
     def notificar(self):
         if(self.estadoMovimiento == False):
+            print(f"Estado Actual de estado movimiento: {self.estadoMovimiento}")
             return self.estadoMovimiento
     
     def setEstadoMovimiento(self, valor):
@@ -119,7 +124,6 @@ class Personaje(Figura):
             self.posicion.actualizarX(Listener.captarMouse()[0]-tamañoImagen.width/2)
             self.posicion.actualizarY(Listener.captarMouse()[1]-tamañoImagen.height/2)
         for solapamiento in self.solapamientoConOpcion:
-            print("Si estoy llamando pero no vale")
             solapamiento.verificarSolapamientoOpcion(self.posicion.getPosicion())  
         self.solapamientoConObstaculo.verificarSolapamiento(self.posicion.getPosicion())
 
@@ -240,7 +244,7 @@ class Mapa(Figura):
         self.dictFiguras['personaje'].dibujar(ventana)
 
     def mover(self, ventana):
-        self.dictFiguras['camino'].mover(ventana)
+        self.dictFiguras['camino'].mover(ventana, self.dictFiguras['figuraOpcion'])
         self.dictFiguras['personaje'].mover()
         pygame.mouse.set_visible(False)
 
