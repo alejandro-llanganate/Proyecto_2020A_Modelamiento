@@ -198,7 +198,7 @@ class Marcador(Figura):
 
     def dibujar(self, ventana):
         ventana.blit(self.imagen, self.posicion.getPosicion())
-        fuente = pygame.font.SysFont('comicsansms', 30)
+        fuente = pygame.font.SysFont('comicsansms', settings["tamañoLetraPuntaje"])
         textoPuntaje = fuente.render(f'Puntaje: {self.puntaje.getPuntos()}', True, (255, 255, 255))
         ventana.blit(textoPuntaje, (self.posicion.getPosicion()[0]*1.065, self.posicion.getPosicion()[1]*1.3))
         
