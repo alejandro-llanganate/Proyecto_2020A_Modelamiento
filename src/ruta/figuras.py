@@ -38,6 +38,10 @@ class Fondo(Figura):
 
 
 class Camino(Figura):
+
+    _i = 0
+    _iteradorAudioPregunta = -1
+
     def __init__(self, imagen, posicion, playlist):
         super().__init__(posicion)
         self.imagen = pygame.image.load(obtenerPathAbsoluto(imagen, __file__))
@@ -46,8 +50,6 @@ class Camino(Figura):
         self.estadoMovimiento = True
         self.obs = FabricaRandomica().crearObstaculo()
         self.playlist = playlist
-        self.i = 0 
-        self.iteradorAudioPregunta = -1
         
     def dibujar(self, ventana):
         posicion = self.posicion.getPosicion()
@@ -66,26 +68,26 @@ class Camino(Figura):
                     ventana.blit(self.imagen, (x, relativoY))
                 self.posicion.actualizarY(y-settings["factorDesplazamiento"])
 
-                escogido = self.obs[self.i]
+                escogido = self.obs[self._i]
                 escogido.dibujar(ventana)
                 escogido.mover()
                 if escogido.posicion.getPosicion()[1] < 0:
-                    self.i+=1
-                    escogido = self.obs[self.i]
+                    self._i+=1
+                    escogido = self.obs[self._i]
                     escogido.dibujar(ventana)
                     escogido.mover()
-                if escogido.posicion.getPosicion()[1] < 0 and self.i==1:
-                    i+=1
-                    escogido = self.obs[self.i]
+                if escogido.posicion.getPosicion()[1] < 0 and self._i==1:
+                    self._i+=1
+                    escogido = self.obs[self._i]
                     escogido.dibujar(ventana)
                     escogido.mover()
             else:
                 self.estadoMovimiento = False
                 self.posicion.actualizarY(0)
-                self.iteradorAudioPregunta = self.iteradorAudioPregunta + 1
+                self._iteradorAudioPregunta += 1
                 
         else:
-            self.playlist.obtenerAudiosPreguntas()[self.iteradorAudioPregunta].reproducir(self.notificar(), opciones)
+            self.playlist.obtenerAudiosPreguntas()[self._iteradorAudioPregunta].reproducir(self.notificar(), opciones)
             ventana.blit(self.imagen, settings["coordenadaCamino"])
 
     def obtenerObstaculos(self):
