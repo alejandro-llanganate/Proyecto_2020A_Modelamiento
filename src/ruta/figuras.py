@@ -57,7 +57,7 @@ class Camino(Figura):
         
 
     def mover(self, ventana, opciones):
-        if(self.estadoMovimiento):
+        if(self.estadoMovimiento and self._iteradorAudioPregunta < 3):
             x, y = self.posicion.getPosicion()
             alturaImagen = self.imagen.get_rect().height
             relativoY = y % alturaImagen
@@ -89,6 +89,12 @@ class Camino(Figura):
         else:
             self.playlist.obtenerAudiosPreguntas()[self._iteradorAudioPregunta].reproducir(self.notificar(), opciones)
             ventana.blit(self.imagen, settings["coordenadaCamino"])
+
+        if (self._iteradorAudioPregunta > 3):
+            mensajeGameOver = pygame.image.load(obtenerPathAbsoluto('img/gameOver.png', __file__))
+            mensajeGameOver = pygame.transform.scale(
+                mensajeGameOver, settings["tamañoVentana"])
+            ventana.blit(mensajeGameOver, (0, 0))
 
     def obtenerObstaculos(self):
         return self.obs
@@ -153,8 +159,13 @@ class FiguraVida(Figura):
     def disminuirVidas(self):
         self.numeroVidas = self.numeroVidas - 1
 
+    def obtenerNumeroVidas(self):
+        return self.numeroVidas
+
     def mover(self):
         pass
+
+
 
 
 class FiguraOpcion(Figura):
@@ -259,3 +270,6 @@ class Mapa(Figura):
                 opcion.setVisibilidad(False)
         if not comprobacion: 
             self.dictFiguras['figuraVida'].disminuirVidas()
+
+    def obtenerVidasActuales(self):
+        return self.dictFiguras['figuraVida'].obtenerNumeroVidas()

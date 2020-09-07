@@ -18,7 +18,7 @@ sys.path.append('../juego.py')
 
 class Ruta(Juego):
     def __init__(self):
-        self.mapa = Mapa
+        self.mapa = Mapa()
         self.puntaje = Puntaje       
 
     def mostrarMensajesIniciales(self):
@@ -49,7 +49,6 @@ class Ruta(Juego):
         self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
         pygame.display.set_caption(settings["nombre"])
         rutamayainiciado = True
-        self.mapa = Mapa()
 
         puntaje = Puntaje(4, 1000)
 
@@ -98,19 +97,28 @@ class Ruta(Juego):
         self.mapa.agregarFigura(opcionB)
         self.mapa.agregarFigura(opcionC)
 
-        
         while rutamayainiciado:
-            self.mapa.mover(self.ventana)
+            
+            if self.verificarCondiciones(self.mapa.obtenerVidasActuales()):
+                self.mapa.mover(self.ventana)
+            else:
+                pygame.mouse.set_visible(True)
+                self.mostrarMensajesIniciales()
             self.mapa.dibujar(self.ventana)
-            #pregunta1.reproducir(camino, self.mapa.obtenerOpciones())
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     rutamayainiciado = False
                     pygame.quit()
             pygame.display.update()
 
-    def reiniciarJuego(self):
-        pass
+    def reiniciarJuego(self, figuraVida, camino):
+        figuraVida.setVidas(0)
+        camino.setIteradorObstaculo(0)
+        camino.setIteradorPlaylist(0) 
 
     def salirJuego(self):
         pass
+
+    def verificarCondiciones(self, numeroDeVidas):
+        return numeroDeVidas >= 1
