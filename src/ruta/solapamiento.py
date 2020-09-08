@@ -22,7 +22,6 @@ class SolapamientoConOpcion(Solapamiento):
             (x2, y2) = self.posicionOpcion
             distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2))
             if distancia <= self.umbral:
-                print("Almenos se que está solapando :(")
                 self.verificacion.verificarSeleccion(self.letraSeleccionada)
     
     def actualizar(self, posicionOpcion, visibilidad, letra):

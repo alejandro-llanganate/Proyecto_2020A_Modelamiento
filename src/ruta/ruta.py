@@ -22,16 +22,15 @@ class Ruta(Juego):
         self.puntaje = Puntaje       
 
     def mostrarMensajesIniciales(self):
+        pygame.mouse.set_cursor(*pygame.cursors.tri_left)
         self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
-        mensajeBienvenida = Mensaje(
-            'img/fondoBienvenida.png', Posicion((0, 0)))
-        mensajeInstrucciones = Mensaje(
-            'img/fondoInstrucciones.png', Posicion((0, 0)))
-        btnJugar = Boton('JUGAR', Posicion(
-            settings["coordenadaBotonJugar"]))
-        btnAtras = Boton('ATRAS', Posicion(
-            settings["coordenadaBotonAtras"]))
+        mensajeBienvenida = Mensaje('img/fondoBienvenida.png', Posicion((0, 0)))
+        mensajeInstrucciones = Mensaje('img/fondoInstrucciones.png', Posicion((0, 0)))
+
+        btnJugar = Boton('JUGAR', Posicion(settings["coordenadaBotonJugar"]))
+        btnAtras = Boton('VOLVER_AL_MUSEO', Posicion(settings["coordenadaBotonAtras"]))
         btnOk = Boton('OK', Posicion(settings["coordenadaBotonOk"]))
+        
         mensajeBienvenida.agregarBoton(btnJugar)
         mensajeBienvenida.agregarBoton(btnAtras)
         mensajeInstrucciones.agregarBoton(btnOk)
@@ -42,16 +41,28 @@ class Ruta(Juego):
     def iniciarJuego(self):
         
         pygame.init()
+
+        mensajeGameOver = Mensaje('img/fondoAvisoPerdiste.png', Posicion((0,0)))
+        mensajeGanaste = Mensaje('img/fondoAvisoGanaste.png', Posicion((0,0)))
         
+        btnVolverAtras = Boton('VOLVER_AL_MUSEO', Posicion(settings["coordenadaBotonAtras"]))
+        btnVolverJugar = Boton('VOLVER_A_JUGAR', Posicion(settings["coordenadaBotonJugar"]))
+
+        mensajeGameOver.agregarBoton(btnVolverAtras)
+        mensajeGameOver.agregarBoton(btnVolverJugar)
+
+        mensajeGanaste.agregarBoton(btnVolverAtras)
+        mensajeGanaste.agregarBoton(btnVolverJugar)
+
         self.mostrarMensajesIniciales()
-        
-        # preconfiguraciones
+
+        # Preconfiguraciones
         self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
         pygame.display.set_caption(settings["nombre"])
         rutamayainiciado = True
 
         puntaje = Puntaje(4, 1000)
-
+        
         pregunta1 = AudioPregunta('sounds/pregunta1.wav', "C")
         pregunta2 = AudioPregunta('sounds/pregunta2.wav', "B")
         pregunta3 = AudioPregunta('sounds/pregunta3.wav', "C")
@@ -70,8 +81,7 @@ class Ruta(Juego):
         solapamientoOpcionB = SolapamientoConOpcion(30, verificacion)
         solapamientoOpcionC = SolapamientoConOpcion(30, verificacion)
 
-        solapamientosConOpcion = [solapamientoOpcionA,
-                         solapamientoOpcionB, solapamientoOpcionC]
+        solapamientosConOpcion = [solapamientoOpcionA, solapamientoOpcionB, solapamientoOpcionC]
 
         self.mapa.agregarFigura(
             Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
@@ -97,13 +107,17 @@ class Ruta(Juego):
         self.mapa.agregarFigura(opcionB)
         self.mapa.agregarFigura(opcionC)
 
+
         while rutamayainiciado:
             
             if self.verificarCondiciones(self.mapa.obtenerVidasActuales()):
                 self.mapa.mover(self.ventana)
             else:
                 pygame.mouse.set_visible(True)
-                self.mostrarMensajesIniciales()
+                print("Vidas Antes: ", self.mapa.obtenerVidasActuales())
+                self.reiniciarJuego(self.mapa.obtenerFiguraVida(), self.mapa.obtenerCamino())
+                print("Vidas Después: ", self.mapa.obtenerVidasActuales())
+                mensajeGameOver.mostrar(self.ventana)
             self.mapa.dibujar(self.ventana)
 
             for event in pygame.event.get():
@@ -113,9 +127,9 @@ class Ruta(Juego):
             pygame.display.update()
 
     def reiniciarJuego(self, figuraVida, camino):
-        figuraVida.setVidas(0)
-        camino.setIteradorObstaculo(0)
-        camino.setIteradorPlaylist(0) 
+        figuraVida.reiniciarNumeroDeVidas()
+        camino.reiniciarIteradores()
+        
 
     def salirJuego(self):
         pass

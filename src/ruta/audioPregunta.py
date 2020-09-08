@@ -20,6 +20,7 @@ class AudioPregunta:
                     opcion.setVisibilidad(True)
         
         if self.estadoReproducion and mensaje == False:
+            print("Entre al play :D")
             self.audio.play()
 
         if self.estadoReproducion == False and mensaje == False:

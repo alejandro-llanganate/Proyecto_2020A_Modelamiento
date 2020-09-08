@@ -91,17 +91,14 @@ class Camino(Figura):
             ventana.blit(self.imagen, settings["coordenadaCamino"])
 
         if (self._iteradorAudioPregunta > 3):
-            mensajeGameOver = pygame.image.load(obtenerPathAbsoluto('img/gameOver.png', __file__))
-            mensajeGameOver = pygame.transform.scale(
-                mensajeGameOver, settings["tamañoVentana"])
-            ventana.blit(mensajeGameOver, (0, 0))
+            self._i=0
 
+    
     def obtenerObstaculos(self):
         return self.obs
 
     def notificar(self):
         if(self.estadoMovimiento == False):
-            print(f"Estado Actual de estado movimiento: {self.estadoMovimiento}")
             return self.estadoMovimiento
     
     def setEstadoMovimiento(self, valor):
@@ -109,6 +106,15 @@ class Camino(Figura):
 
     def getEstado(self):
         return self.estadoMovimiento
+
+    def reiniciarIteradores(self):
+        self._i=0
+        self._iteradorAudioPregunta=-1
+        self.posicion.actualizarY(0)
+        self.obs = FabricaRandomica().crearObstaculo()
+        for audio in self.playlist.obtenerAudiosPreguntas():
+            audio.setEstadoReproducido(True)
+
 
 class Personaje(Figura):
     def __init__(self, imagen, posicion, solapamientoConOpcion, solapamientoConObstaculo):
@@ -164,6 +170,9 @@ class FiguraVida(Figura):
 
     def mover(self):
         pass
+
+    def reiniciarNumeroDeVidas(self):
+        self.numeroVidas = 4
 
 
 
@@ -273,3 +282,9 @@ class Mapa(Figura):
 
     def obtenerVidasActuales(self):
         return self.dictFiguras['figuraVida'].obtenerNumeroVidas()
+    
+    def obtenerFiguraVida(self):
+        return self.dictFiguras['figuraVida']
+    
+    def obtenerCamino(self):
+        return self.dictFiguras['camino']

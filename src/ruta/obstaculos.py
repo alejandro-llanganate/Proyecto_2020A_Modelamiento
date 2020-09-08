@@ -17,7 +17,7 @@ class Obstaculo(ABC):
 
 class ObstaculoA(Obstaculo):
     def __init__(self):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/obs1.jpg', __file__))
+        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoObstaculo"])
         self.posicion = Posicion((randint(int(settings["limiteMinObstaculoX"]), int(settings["limiteMaxObstaculoX"])), settings["tamañoVentana"][1]))
  
@@ -34,7 +34,7 @@ class ObstaculoA(Obstaculo):
 
 class ObstaculoB(Obstaculo):
     def __init__(self):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/ob2.jpg', __file__)).convert()
+        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__)).convert()
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoObstaculo"])
         self.posicion = Posicion((randint(int(settings["limiteMinObstaculoX"]), int(settings["limiteMaxObstaculoX"])), settings["tamañoVentana"][1]))
  
@@ -53,7 +53,7 @@ class ObstaculoB(Obstaculo):
 
 class ObstaculoC(Obstaculo):
     def __init__(self):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/obs3.png', __file__)).convert()
+        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__)).convert()
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoObstaculo"])
         self.posicion = Posicion((randint(int(settings["limiteMinObstaculoX"]), int(settings["limiteMaxObstaculoX"])), settings["tamañoVentana"][1]))
  

@@ -12,8 +12,10 @@ class Boton:
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botonOk.png', __file__))
         elif tipo == "JUGAR":
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botonJugar.png', __file__))
-        elif tipo == "ATRAS":
-            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botonAtras.png', __file__))
+        elif tipo == "VOLVER_A_JUGAR":
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botónJugarOtraVez.png', __file__))
+        elif tipo == "VOLVER_AL_MUSEO":
+            self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botónVolverAlMuseoMorado.png', __file__))
         
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoBoton"])
         self._rect = pygame.Rect((0, 0), (100, 100))
@@ -27,5 +29,15 @@ class Boton:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if rect.collidepoint(event.pos):
+                    print("Te di click boton hp: ", self.tipo)
                     return (self.tipo, True)
         return (self.tipo, False)
+
+    def obtenerTipo(self):
+        return self.tipo
+
+'''
+class Boton:
+   @abstr,evactmethod
+
+'''

@@ -29,8 +29,7 @@ class Mensaje:
                     pygame.quit()
                     sys.exit()
                 for btn in self.boton:
-                    btn.onClic(event)[1]
-                    if btn.onClic(event)[1] == True:
+                    if (btn.obtenerTipo() == "OK" or btn.obtenerTipo() == "JUGAR" or btn.obtenerTipo() == "VOLVER_A_JUGAR") and btn.onClic(event)[1] == True:
                         self.visibilidad = False
             ventana.blit(self.imagen, self.posicion.getPosicion())
             for boton in self.boton:
