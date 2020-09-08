@@ -21,6 +21,7 @@ class Obstaculo(ABC):
     def mover(self):
         pass
 
+
 class ObstaculoA(Obstaculo):
     def __init__(self):
         self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__))
@@ -40,6 +41,7 @@ class ObstaculoA(Obstaculo):
         else:  # caso contrario se reubica al obstáculo
             self.posicion.actualizarY(settings["tamañoVentana"][1]) # a su posición en y original 
             self.posicion.actualizarX(randint(int(settings["limiteMinObstaculoX"]), int(settings["limiteMaxObstaculoX"]))) # y con un valor aleatorio en x
+
 
 class ObstaculoB(Obstaculo):
     def __init__(self):

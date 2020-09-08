@@ -1,48 +1,59 @@
+#=============================================================================================
+#                               JUEGO RUTA MAYA - Version 0.9
+#       Interfaz Solapamiento y clases SolapamientoConOpción y SolapamientoConObstáculo
+# Implementado por: Alejandro Llanganate, Anderson Cárdenas, Henrry Cordovillo y David Moreno
+#=============================================================================================
+
 from ruta.figuras import *
 from ruta.verificacion import *
 import math
+
 
 class Solapamiento():
     @abstractmethod
     def verificarSolapamiento(self):
         pass
 
-class SolapamientoConOpcion(Solapamiento):
-
-    _visibilidadOpcion = None
-
-    def __init__(self, umbral, verificacion):
-        self.umbral = umbral
-        self.verificacion = verificacion
-        self.posicionOpcion = None
-        
-    def verificarSolapamientoOpcion(self, posicionJugador):
-        if self.posicionOpcion != None and self._visibilidadOpcion == True:
-            (x1, y1) = posicionJugador
-            (x2, y2) = self.posicionOpcion
-            distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2))
-            if distancia <= self.umbral:
-                self.verificacion.verificarSeleccion(self.letraSeleccionada)
-    
-    def actualizar(self, posicionOpcion, visibilidad, letra):
-        self.letraSeleccionada = letra
-        self.posicionOpcion = posicionOpcion
-        self._visibilidadOpcion = visibilidad
 
 class SolapamientoConObstaculo(Solapamiento):
     def __init__(self, umbral, verificacion, camino):
-        self.umbral = umbral
         self.verificacion = verificacion
-        self.posicionObstaculo = None
         self.camino = camino
+        self.umbral = umbral # Para controlar la distancia entre los objetos al solapar
+        self.s_posicionObstaculo = None # Variable para asociar la posición de un obstáculo
     
     def verificarSolapamiento(self, posicionPersonaje):
-        (x1, y1) = posicionPersonaje
+        (x1, y1) = posicionPersonaje # se almacena en una tupla
+
         for obstaculo in self.camino.obtenerObstaculos():
             (x2, y2) = obstaculo.posicion.getPosicion()
-            distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2))
-            if distancia <= self.umbral:
-                self.verificacion.notificarSolapamiento(True)
+            distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2)) # Aplicación de la fórmula de distancia entre dos puntos
+
+            if distancia <= self.umbral: # verifica la distancia mínima para el solapamiento con un obstáculo
+                self.verificacion.comunicarSolapamientoObstaculo(True) # Luego verificación comunicará a Mapa dicho solapamiento
                 obstaculo.posicion.actualizarY(settings["tamañoVentana"][1])
             else:
-                self.verificacion.notificarSolapamiento(False)
+                self.verificacion.comunicarSolapamientoObstaculo(False) # Luego verificación comunicará a Mapa que no ocurrió solapamiento
+
+
+class SolapamientoConOpcion(Solapamiento):
+    def __init__(self, umbral, verificacion):
+        self.verificacion = verificacion
+        self.umbral = umbral 
+        self.s_posicionOpcion = None # Variable para asociar la posición de una opción
+        self.s_visibilidadOpcion = None # Variable para asociar el estado de visibilidad de una opción
+        
+    def verificarSolapamientoOpcion(self, posicionJugador):
+        if self.s_posicionOpcion != None and self.s_visibilidadOpcion == True:
+            (x1, y1) = posicionJugador 
+            (x2, y2) = self.s_posicionOpcion
+            distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2)) 
+
+            if distancia <= self.umbral:  # verifica la distancia mínima para el solapamiento con una opción
+                self.verificacion.verificarSeleccion(self.letraSeleccionada) # Luego verificación comparará la letra seleccionada con la letra respuesta del audio
+    
+    def actualizar(self, posicionOpcion, visibilidad, letra): # Método actualizar() del patrón observador entre Solapamiento y FiguraOpción
+        # Actualiza la posición de la opción, su visibilidad y su letra asociada
+        self.letraSeleccionada = letra
+        self.s_posicionOpcion = posicionOpcion
+        self.s_visibilidadOpcion = visibilidad

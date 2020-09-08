@@ -9,10 +9,12 @@ import random
 from ruta.obstaculos import *
 from abc import ABC, abstractmethod
 
+
 class FabricaObstaculos:
     @abstractmethod
     def crearObstaculo(self):
         pass
+
 
 class FabricaRandomica(FabricaObstaculos):
     def crearObstaculo(self):
@@ -31,5 +33,4 @@ class FabricaRandomica(FabricaObstaculos):
                 obstaculo = ObstaculoC()
                 obstaculosAleatorios.append(obstaculo)
         
-        return obstaculosAleatorios # retorna una lista de obstáculos randómicos
-    
+        return obstaculosAleatorios # retorna la lista de obstáculos randómicos a utilizar en el camino
