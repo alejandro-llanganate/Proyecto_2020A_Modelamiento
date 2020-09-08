@@ -1,17 +1,21 @@
+#=============================================================================================
+#                               JUEGO RUTA MAYA - Version 0.9
+# Implementado por: Alejandro Llanganate, Anderson Cárdenas, Henrry Cordovillo y David Moreno
+#=============================================================================================
+
 from juego import *
 import pygame
 import os
 import sys
 from ruta.assets.settings import *
-from ruta.figuras import *
+from ruta.audioPregunta import *
 from ruta.solapamiento import *
 from ruta.posicionMaya import *
-from ruta.mensaje import *
-from ruta.boton import *
-from ruta.audioPregunta import *
-from ruta.puntaje import *
 from ruta.fabricas import *
-
+from ruta.figuras import *
+from ruta.mensaje import *
+from ruta.puntaje import *
+from ruta.boton import *
 
 sys.path.append('../juego.py')
 
