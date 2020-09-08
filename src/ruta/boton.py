@@ -1,6 +1,6 @@
 #=============================================================================================
 #                               JUEGO RUTA MAYA - Version 0.9
-#                                         CLASE BOTÓN
+#                                        Clase Botón
 # Implementado por: Alejandro Llanganate, Anderson Cárdenas, Henrry Cordovillo y David Moreno
 #=============================================================================================
 
@@ -13,17 +13,15 @@ from ruta.posicionMaya import *
 class Boton:
     def __init__(self, tipo, posicion):
         self.tipo = tipo
-
-        if tipo == "OK":
+        if self.tipo == "OK":
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botonOk.png', __file__))
-        elif tipo == "JUGAR":
+        elif self.tipo == "JUGAR":
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botonJugar.png', __file__))
-        elif tipo == "VOLVER_A_JUGAR":
+        elif self.tipo == "VOLVER_A_JUGAR":
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botónJugarOtraVez.png', __file__))
-        elif tipo == "VOLVER_AL_MUSEO":
+        elif self.tipo == "VOLVER_AL_MUSEO":
             self.imagen = pygame.image.load(obtenerPathAbsoluto('img/botónVolverAlMuseoMorado.png', __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoBoton"]) 
-        
         self.posicion = posicion
         
     def render(self, ventana):
