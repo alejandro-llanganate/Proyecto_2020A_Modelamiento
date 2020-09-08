@@ -29,15 +29,8 @@ class Boton:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 if rect.collidepoint(event.pos):
-                    print("Te di click boton hp: ", self.tipo)
                     return (self.tipo, True)
         return (self.tipo, False)
 
     def obtenerTipo(self):
         return self.tipo
-
-'''
-class Boton:
-   @abstr,evactmethod
-
-'''

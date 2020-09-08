@@ -63,10 +63,6 @@ class Ruta(Juego):
         pygame.display.set_caption(settings["nombre"])
         rutamayainiciado = True
 
-
-        mensajeGanaste.mostrar(self.ventana)
-
-
         puntaje = Puntaje(4, 1000)
         
         pregunta1 = AudioPregunta('sounds/pregunta1.wav', "C")
@@ -108,30 +104,32 @@ class Ruta(Juego):
 
         self.mapa.agregarFigura(Personaje('img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientosConOpcion, solapamientoConObstaculo))
 
-
         while rutamayainiciado:
-            self.verificarCondiciones(self.mapa.obtenerVidasActuales(), self.mapa, mensajeGameOver)
+            self.verificarCondiciones(mensajeGameOver, mensajeGanaste, verificacion)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     rutamayainiciado = False
                     pygame.quit()
             pygame.display.update()
 
-    def reiniciarJuego(self, figuraVida, camino):
+    def verificarCondiciones(self, mensajeGameOver, mensajeGanaste, verificacion):
+        if self.mapa.obtenerVidasActuales() >= 1:
+            self.mapa.mover(self.ventana)
+            if verificacion.obtenerNumeroPreguntasContestadas() == 4:
+                pygame.mouse.set_visible(True)
+                self.reiniciarJuego(self.mapa.obtenerFiguraVida(), self.mapa.obtenerCamino(), verificacion)
+                mensajeGanaste.mostrar(self.ventana)
+        else: 
+            pygame.mouse.set_visible(True)
+            self.reiniciarJuego(self.mapa.obtenerFiguraVida(), self.mapa.obtenerCamino(), verificacion)
+            mensajeGameOver.mostrar(self.ventana)
+        
+        self.mapa.dibujar(self.ventana)
+
+    def reiniciarJuego(self, figuraVida, camino, verificacion):
         figuraVida.reiniciarNumeroDeVidas()
         camino.reiniciarIteradores()
-        
+        verificacion.reiniciarNumeroPreguntasContestadas()
 
     def salirJuego(self):
         pass
-
-    def verificarCondiciones(self, numeroDeVidas, mapa, mensajeGameOver):
-        if numeroDeVidas >= 1:
-            mapa.mover(self.ventana)
-        else:
-            pygame.mouse.set_visible(True)
-            self.reiniciarJuego(self.mapa.obtenerFiguraVida(), self.mapa.obtenerCamino())
-            mensajeGameOver.mostrar(self.ventana)
-        self.mapa.dibujar(self.ventana)
-
-            

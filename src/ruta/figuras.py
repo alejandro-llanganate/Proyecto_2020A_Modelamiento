@@ -72,12 +72,12 @@ class Camino(Figura):
                 escogido.dibujar(ventana)
                 escogido.mover()
                 if escogido.posicion.getPosicion()[1] < 0:
-                    self._i+=1
+                    self._i += 1
                     escogido = self.obs[self._i]
                     escogido.dibujar(ventana)
                     escogido.mover()
                 if escogido.posicion.getPosicion()[1] < 0 and self._i==1:
-                    self._i+=1
+                    self._i += 1
                     escogido = self.obs[self._i]
                     escogido.dibujar(ventana)
                     escogido.mover()

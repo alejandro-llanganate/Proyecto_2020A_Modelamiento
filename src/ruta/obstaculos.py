@@ -49,8 +49,6 @@ class ObstaculoB(Obstaculo):
             self.posicion.actualizarY(settings["tamañoVentana"][1])
             self.posicion.actualizarX(randint(int(settings["limiteMinObstaculoX"]), int(settings["limiteMaxObstaculoX"])))
 
-
-
 class ObstaculoC(Obstaculo):
     def __init__(self):
         self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__)).convert()
