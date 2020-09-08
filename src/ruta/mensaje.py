@@ -27,7 +27,6 @@ class Mensaje:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    sys.exit()
                 for btn in self.boton:
                     if (btn.obtenerTipo() == "OK" or btn.obtenerTipo() == "JUGAR" or btn.obtenerTipo() == "VOLVER_A_JUGAR") and btn.onClic(event)[1] == True:
                         self.visibilidad = False

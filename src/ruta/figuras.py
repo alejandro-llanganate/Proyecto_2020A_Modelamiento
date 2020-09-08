@@ -231,60 +231,45 @@ class Marcador(Figura):
 
 class Mapa(Figura):
     def __init__(self):
-        self.dictFiguras = dict()
-        self.dictFiguras['fondo'] = None
-        self.dictFiguras['camino'] = None
-        self.dictFiguras['marcador'] = None
-        self.dictFiguras['figuraVida'] = None
-        self.dictFiguras['figuraOpcion'] = list()
-        self.dictFiguras['personaje'] = None
+        self.listaFiguras = []
 
     def agregarFigura(self, figura):
-        if isinstance(figura, Camino):
-            self.dictFiguras['camino'] = figura
-        elif isinstance(figura, Marcador):
-            self.dictFiguras['marcador'] = figura
-        elif isinstance(figura, Fondo):
-            self.dictFiguras['fondo'] = figura
-        elif isinstance(figura, Personaje):
-            self.dictFiguras['personaje'] = figura
-        elif isinstance(figura, FiguraVida):
-            self.dictFiguras['figuraVida'] = figura
-        elif isinstance(figura, FiguraOpcion):
-            self.dictFiguras['figuraOpcion'].append(figura)
+        self.listaFiguras.append(figura)
 
     def quitarFigura(self):
-        pass
+        self.listaFiguras.remove(figura)
 
     def dibujar(self, ventana):
-        for key in self.dictFiguras:
-            if key != 'figuraOpcion' and key != 'personaje':
-                self.dictFiguras[key].dibujar(ventana)
-        for opcion in self.dictFiguras['figuraOpcion']:
-            opcion.dibujar(ventana)
-            opcion.notificar()
-        self.dictFiguras['personaje'].dibujar(ventana)
+        for figura in self.listaFiguras:
+            figura.dibujar(ventana)
+            if isinstance(figura, FiguraOpcion):
+                figura.notificar() 
 
     def mover(self, ventana):
-        self.dictFiguras['camino'].mover(ventana, self.dictFiguras['figuraOpcion'])
-        self.dictFiguras['personaje'].mover()
+        for figura in self.listaFiguras:
+            if isinstance(figura, Camino):
+                figura.mover(ventana, list(filter(lambda e: isinstance(e, FiguraOpcion), self.listaFiguras)))
+            elif isinstance(figura, Personaje):
+                figura.mover()
         pygame.mouse.set_visible(False)
 
     def obtenerOpciones(self):
-        return self.dictFiguras['figuraOpcion']
+        return filter(lambda e: isinstance(e, FiguraOpcion), self.listaFiguras)
     
     def actualizar(self, comprobacion):
-        self.dictFiguras['camino'].setEstadoMovimiento(True)
-        for opcion in self.dictFiguras['figuraOpcion']:
-                opcion.setVisibilidad(False)
-        if not comprobacion: 
-            self.dictFiguras['figuraVida'].disminuirVidas()
-
+        for figura in self.listaFiguras:
+            if isinstance(figura, Camino):
+                figura.setEstadoMovimiento(True)
+            elif isinstance(figura, FiguraOpcion):
+                figura.setVisibilidad(False)
+            elif comprobacion == False and isinstance(figura, FiguraVida):
+                figura.disminuirVidas()
+        
     def obtenerVidasActuales(self):
-        return self.dictFiguras['figuraVida'].obtenerNumeroVidas()
+        return list(filter(lambda e: isinstance(e, FiguraVida), self.listaFiguras))[0].obtenerNumeroVidas()
     
     def obtenerFiguraVida(self):
-        return self.dictFiguras['figuraVida']
+        return list(filter(lambda e: isinstance(e, FiguraVida), self.listaFiguras))[0]
     
     def obtenerCamino(self):
-        return self.dictFiguras['camino']
+        return list(filter(lambda e: isinstance(e, Camino), self.listaFiguras))[0]

@@ -55,11 +55,17 @@ class Ruta(Juego):
         mensajeGanaste.agregarBoton(btnVolverJugar)
 
         self.mostrarMensajesIniciales()
+        
+        
 
         # Preconfiguraciones
         self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
         pygame.display.set_caption(settings["nombre"])
         rutamayainiciado = True
+
+
+        mensajeGanaste.mostrar(self.ventana)
+
 
         puntaje = Puntaje(4, 1000)
         
@@ -83,43 +89,28 @@ class Ruta(Juego):
 
         solapamientosConOpcion = [solapamientoOpcionA, solapamientoOpcionB, solapamientoOpcionC]
 
-        self.mapa.agregarFigura(
-            Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
-        camino = Camino('img/fondoCamino.png',
-                        Posicion(settings["coordenadaCamino"]), preguntas)
+        self.mapa.agregarFigura(Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
+        camino = Camino('img/fondoCamino.png', Posicion(settings["coordenadaCamino"]), preguntas)
+        
         solapamientoConObstaculo = SolapamientoConObstaculo(30, verificacion, camino)
+        
         self.mapa.agregarFigura(camino)
-        self.mapa.agregarFigura(FiguraVida(
-            Posicion(settings["coordenadaFigVida"])))
-        self.mapa.agregarFigura(Marcador('img/marcador.png',
-                                    Posicion(settings["coordenadaMarcador"]), puntaje))
-        self.mapa.agregarFigura(Personaje(
-            'img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientosConOpcion, solapamientoConObstaculo))
+        self.mapa.agregarFigura(FiguraVida(Posicion(settings["coordenadaFigVida"])))
+        self.mapa.agregarFigura(Marcador('img/marcador.png', Posicion(settings["coordenadaMarcador"]), puntaje))
 
-        opcionA = FiguraOpcion(
-            'img/botonA.png', Posicion(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)
-        opcionB = FiguraOpcion(
-            'img/botonB.png', Posicion(settings["coordenadaOpcion"][1]), "B", solapamientoOpcionB)
-        opcionC = FiguraOpcion(
-            'img/botonC.png', Posicion(settings["coordenadaOpcion"][2]), "C", solapamientoOpcionC)
+        opcionA = FiguraOpcion('img/botonA.png', Posicion(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)
+        opcionB = FiguraOpcion('img/botonB.png', Posicion(settings["coordenadaOpcion"][1]), "B", solapamientoOpcionB)
+        opcionC = FiguraOpcion('img/botonC.png', Posicion(settings["coordenadaOpcion"][2]), "C", solapamientoOpcionC)
 
         self.mapa.agregarFigura(opcionA)
         self.mapa.agregarFigura(opcionB)
         self.mapa.agregarFigura(opcionC)
 
+        self.mapa.agregarFigura(Personaje('img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientosConOpcion, solapamientoConObstaculo))
+
 
         while rutamayainiciado:
-            
-            if self.verificarCondiciones(self.mapa.obtenerVidasActuales()):
-                self.mapa.mover(self.ventana)
-            else:
-                pygame.mouse.set_visible(True)
-                print("Vidas Antes: ", self.mapa.obtenerVidasActuales())
-                self.reiniciarJuego(self.mapa.obtenerFiguraVida(), self.mapa.obtenerCamino())
-                print("Vidas Después: ", self.mapa.obtenerVidasActuales())
-                mensajeGameOver.mostrar(self.ventana)
-            self.mapa.dibujar(self.ventana)
-
+            self.verificarCondiciones(self.mapa.obtenerVidasActuales(), self.mapa, mensajeGameOver)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     rutamayainiciado = False
@@ -134,5 +125,13 @@ class Ruta(Juego):
     def salirJuego(self):
         pass
 
-    def verificarCondiciones(self, numeroDeVidas):
-        return numeroDeVidas >= 1
+    def verificarCondiciones(self, numeroDeVidas, mapa, mensajeGameOver):
+        if numeroDeVidas >= 1:
+            mapa.mover(self.ventana)
+        else:
+            pygame.mouse.set_visible(True)
+            self.reiniciarJuego(self.mapa.obtenerFiguraVida(), self.mapa.obtenerCamino())
+            mensajeGameOver.mostrar(self.ventana)
+        self.mapa.dibujar(self.ventana)
+
+            
