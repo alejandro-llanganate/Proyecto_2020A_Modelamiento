@@ -8,7 +8,6 @@ from ruta.solapamiento import *
 from ruta.fabricas import *
 
 
-
 class Figura(ABC):
     def __init__(self, posicion):
         self.posicion = posicion

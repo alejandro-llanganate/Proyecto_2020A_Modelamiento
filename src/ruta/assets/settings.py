@@ -34,8 +34,8 @@ coordenadaOpcion = [( ancho*0.3, alto*0.82), (ancho*0.45, alto*0.82), (ancho*0.6
 coordenadaObstaculo = (ancho*0.35, alto*0.5)
 
 #limite obstaculos en el camino
-limiteMinObstaculoX = ancho*0.3
-limiteMaxObstaculoX = ancho*0.7
+limiteMinObstaculoX = ancho*0.32
+limiteMaxObstaculoX = ancho*0.62
 
 #para definir cuanto se desplazará el camino de manera de escala (en figuras.py, clase Mapa)
 factorDesplazamiento = int(11*(ancho/1164))
