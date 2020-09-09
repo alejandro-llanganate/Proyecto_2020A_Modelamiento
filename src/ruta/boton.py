@@ -25,11 +25,11 @@ class Boton:
         self.posicion = posicion
         
     def render(self, ventana):
-        ventana.blit(self.imagen, self.posicion.getPosicion())
+        ventana.blit(self.imagen, self.posicion.obtenerCoordenadas())
 
     def onClic(self, event):
         # Inicialización de superficieBoton para obtener el área rectangular de la imagen del botón
-        superficieBoton = pygame.Rect(self.posicion.getPosicion(), (self.imagen.get_rect().width, self.imagen.get_rect().height))
+        superficieBoton = pygame.Rect(self.posicion.obtenerCoordenadas(), (self.imagen.get_rect().width, self.imagen.get_rect().height))
         
         if event.type == pygame.MOUSEBUTTONDOWN: # evento del tipo puntero mouse sobre un botón
             if event.button == 1: # El numero 1 hace referencia a si se registró un clic izquierdo

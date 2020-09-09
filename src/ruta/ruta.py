@@ -20,52 +20,54 @@ from ruta.boton import *
 sys.path.append('../juego.py')
 
 
+
 class Ruta(Juego):
     def __init__(self):
         self.mapa = Mapa()
         self.puntaje = Puntaje       
+        self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
 
     def mostrarMensajesIniciales(self):
-        pygame.mouse.set_cursor(*pygame.cursors.tri_left)
-        self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
-        mensajeBienvenida = Mensaje('img/fondoBienvenida.png', Posicion((0, 0)))
-        mensajeInstrucciones = Mensaje('img/fondoInstrucciones.png', Posicion((0, 0)))
+        pygame.display.set_caption(settings["nombre"])
 
-        btnJugar = Boton('JUGAR', Posicion(settings["coordenadaBotonJugar"]))
-        btnAtras = Boton('VOLVER_AL_MUSEO', Posicion(settings["coordenadaBotonAtras"]))
-        btnOk = Boton('OK', Posicion(settings["coordenadaBotonOk"]))
-        
-        mensajeBienvenida.agregarBoton(btnJugar)
-        mensajeBienvenida.agregarBoton(btnAtras)
-        mensajeInstrucciones.agregarBoton(btnOk)
+        # creación de botones
+        botonJugar = Boton('JUGAR', Posicion(settings["coordenadaBotonJugar"]))
+        botonAtras = Boton('VOLVER_AL_MUSEO', Posicion(settings["coordenadaBotonAtras"]))
+        botonOk = Boton('OK', Posicion(settings["coordenadaBotonOk"]))
+
+        # creación de mensajes con sus botones respectivos
+        mensajeBienvenida = Mensaje('img/fondoBienvenida.png', Posicion((0, 0)))
+        mensajeBienvenida.agregarBoton(botonJugar)
+        mensajeBienvenida.agregarBoton(botonAtras)
+
+        mensajeInstrucciones = Mensaje('img/fondoInstrucciones.png', Posicion((0, 0)))
+        mensajeInstrucciones.agregarBoton(botonOk)
+
+        # Visualización de mensajes
         mensajeBienvenida.mostrar(self.ventana)
         mensajeInstrucciones.mostrar(self.ventana)
 
 
     def iniciarJuego(self):
         
-        pygame.init()
+        pygame.init() # carga los modulos de la librería pygame
 
-        mensajeGameOver = Mensaje('img/fondoAvisoPerdiste.png', Posicion((0,0)))
-        mensajeGanaste = Mensaje('img/fondoAvisoGanaste.png', Posicion((0,0)))
-        
+        pygame.mouse.set_cursor(*pygame.cursors.tri_left) # cambia la apariencia del cursor por el diseño "tri_left"
+
+        self.mostrarMensajesIniciales()
+
+        rutamayainiciado = True 
+
         btnVolverAtras = Boton('VOLVER_AL_MUSEO', Posicion(settings["coordenadaBotonAtras"]))
         btnVolverJugar = Boton('VOLVER_A_JUGAR', Posicion(settings["coordenadaBotonJugar"]))
 
+        mensajeGameOver = Mensaje('img/fondoAvisoPerdiste.png', Posicion((0,0)))
         mensajeGameOver.agregarBoton(btnVolverAtras)
         mensajeGameOver.agregarBoton(btnVolverJugar)
-
+        
+        mensajeGanaste = Mensaje('img/fondoAvisoGanaste.png', Posicion((0,0)))
         mensajeGanaste.agregarBoton(btnVolverAtras)
         mensajeGanaste.agregarBoton(btnVolverJugar)
-
-        self.mostrarMensajesIniciales()
-        
-        
-
-        # Preconfiguraciones
-        self.ventana = pygame.display.set_mode(settings["tamañoVentana"])
-        pygame.display.set_caption(settings["nombre"])
-        rutamayainiciado = True
 
         puntaje = Puntaje(4, 1000)
         

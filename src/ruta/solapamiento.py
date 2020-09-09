@@ -26,7 +26,7 @@ class SolapamientoConObstaculo(Solapamiento):
         (x1, y1) = posicionPersonaje # se almacena en una tupla
 
         for obstaculo in self.camino.obtenerObstaculos():
-            (x2, y2) = obstaculo.posicion.getPosicion()
+            (x2, y2) = obstaculo.posicion.obtenerCoordenadas()
             distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2)) # Aplicación de la fórmula de distancia entre dos puntos
 
             if distancia <= self.umbral: # verifica la distancia mínima para el solapamiento con un obstáculo

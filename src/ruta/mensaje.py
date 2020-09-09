@@ -28,7 +28,7 @@ class Mensaje:
         self.visibilidad = True
         
         while self.visibilidad:
-            ventana.blit(self.imagen, self.posicion.getPosicion()) # Se dibuja el fondo del mensaje respectivo
+            ventana.blit(self.imagen, self.posicion.obtenerCoordenadas()) # Se dibuja el fondo del mensaje respectivo
 
             for boton in self.listaBotones: # para dibujar cada uno de los botones en el mensaje
                 boton.render(ventana)
