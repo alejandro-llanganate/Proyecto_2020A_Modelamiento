@@ -137,7 +137,7 @@ class Personaje(Figura):
             self.posicion.actualizarX(Listener.captarMouse()[0]-tamañoImagen.width/2)
             self.posicion.actualizarY(Listener.captarMouse()[1]-tamañoImagen.height/2)
         for solapamiento in self.solapamientoConOpcion:
-            solapamiento.verificarSolapamientoOpcion(self.posicion.getPosicion())  
+            solapamiento.verificarSolapamiento(self.posicion.getPosicion())  
         self.solapamientoConObstaculo.verificarSolapamiento(self.posicion.getPosicion())
 
 

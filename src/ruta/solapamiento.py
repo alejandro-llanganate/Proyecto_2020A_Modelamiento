@@ -39,11 +39,11 @@ class SolapamientoConObstaculo(Solapamiento):
 class SolapamientoConOpcion(Solapamiento):
     def __init__(self, umbral, verificacion):
         self.verificacion = verificacion
-        self.umbral = umbral 
+        self.umbral = umbral
         self.s_posicionOpcion = None # Variable para asociar la posición de una opción
         self.s_visibilidadOpcion = None # Variable para asociar el estado de visibilidad de una opción
         
-    def verificarSolapamientoOpcion(self, posicionJugador):
+    def verificarSolapamiento(self, posicionJugador):
         if self.s_posicionOpcion != None and self.s_visibilidadOpcion == True:
             (x1, y1) = posicionJugador 
             (x2, y2) = self.s_posicionOpcion
