@@ -82,8 +82,7 @@ class Ruta(Juego):
         preguntas.añadirAudioPregunta(pregunta4)
 
         verificacion = Verificacion(preguntas, self.mapa, puntaje)
-        #verificacion = Verificacion(pregunta1, self.mapa, puntaje)
-        camino = Camino('img/fondoCamino.png', Posicion(settings["coordenadaCamino"]), preguntas)
+        camino = Camino('img/fondoCamino22.png', Posicion(settings["coordenadaCamino"]), preguntas)
 
         solapamientoOpcionA = SolapamientoConOpcion(verificacion)
         solapamientoOpcionB = SolapamientoConOpcion(verificacion)

@@ -198,12 +198,6 @@ class Camino(Figura):
                     escogido.dibujar(ventana)
                     escogido.mover()
 
-                # NOTE: Anderson explicate esto   
-                if escogido.posicion.obtenerCoordenadas()[1] < 0 and self._iteradorObstaculo==1:
-                    self._iteradorObstaculo+= 1
-                    escogido = self.obstaculos[self._iteradorObstaculo]
-                    escogido.dibujar(ventana)
-                    escogido.mover()
             else: # cuando la distancia desplazada es tres veces la altura de la imagen del camino
                 self.estadoMovimiento = False # el camino deja de estar en movimiento
                 self.posicion.actualizarY(0) # se reubica la imagen del camino
