@@ -58,17 +58,16 @@ class Ruta(Juego):
 
         rutamayainiciado = True 
 
+        # Creación de mensajes y botones correspondientes para el GAME OVER y el Fin del juego
         btnVolverAtras = Boton('VOLVER_AL_MUSEO', Posicion(settings["coordenadaBotonAtras"]))
         btnVolverJugar = Boton('VOLVER_A_JUGAR', Posicion(settings["coordenadaBotonJugar"]))
-
         mensajeGameOver = Mensaje('img/fondoAvisoPerdiste.png', Posicion((0,0)))
         mensajeGameOver.agregarBoton(btnVolverAtras)
         mensajeGameOver.agregarBoton(btnVolverJugar)
-        
         mensajeGanaste = Mensaje('img/fondoAvisoGanaste.png', Posicion((0,0)))
         mensajeGanaste.agregarBoton(btnVolverAtras)
         mensajeGanaste.agregarBoton(btnVolverJugar)
-
+        
         puntaje = Puntaje(4, 1000)
         
         pregunta1 = AudioPregunta('sounds/pregunta1.wav', "C")
@@ -84,34 +83,30 @@ class Ruta(Juego):
         preguntas.añadirAudioPregunta(pregunta4)
 
         verificacion = Verificacion(pregunta1, self.mapa, puntaje)
+        camino = Camino('img/fondoCamino.png', Posicion(settings["coordenadaCamino"]), preguntas)
 
         solapamientoOpcionA = SolapamientoConOpcion(30, verificacion)
         solapamientoOpcionB = SolapamientoConOpcion(30, verificacion)
         solapamientoOpcionC = SolapamientoConOpcion(30, verificacion)
-
         solapamientosConOpcion = [solapamientoOpcionA, solapamientoOpcionB, solapamientoOpcionC]
-
-        self.mapa.agregarFigura(Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))
-        camino = Camino('img/fondoCamino.png', Posicion(settings["coordenadaCamino"]), preguntas)
-        
         solapamientoConObstaculo = SolapamientoConObstaculo(30, verificacion, camino)
-        
-        self.mapa.agregarFigura(camino)
-        self.mapa.agregarFigura(FiguraVida(Posicion(settings["coordenadaFigVida"])))
-        self.mapa.agregarFigura(Marcador('img/marcador.png', Posicion(settings["coordenadaMarcador"]), puntaje))
 
         opcionA = FiguraOpcion('img/botonA.png', Posicion(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)
         opcionB = FiguraOpcion('img/botonB.png', Posicion(settings["coordenadaOpcion"][1]), "B", solapamientoOpcionB)
         opcionC = FiguraOpcion('img/botonC.png', Posicion(settings["coordenadaOpcion"][2]), "C", solapamientoOpcionC)
 
+        self.mapa.agregarFigura(Fondo('img/fondoJuego.png', Posicion(settings["coordenadaFondo"])))        
+        self.mapa.agregarFigura(camino)
+        self.mapa.agregarFigura(FiguraVida(Posicion(settings["coordenadaFigVida"])))
+        self.mapa.agregarFigura(Marcador('img/marcador.png', Posicion(settings["coordenadaMarcador"]), puntaje))
         self.mapa.agregarFigura(opcionA)
         self.mapa.agregarFigura(opcionB)
         self.mapa.agregarFigura(opcionC)
-
         self.mapa.agregarFigura(Personaje('img/personaje.png', Posicion(settings["coordenadaPersonaje"]), solapamientosConOpcion, solapamientoConObstaculo))
 
-        while rutamayainiciado:
+        while rutamayainiciado: 
             self.verificarCondiciones(mensajeGameOver, mensajeGanaste, verificacion)
+            self.mapa.dibujar(self.ventana)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     rutamayainiciado = False
@@ -129,8 +124,6 @@ class Ruta(Juego):
             pygame.mouse.set_visible(True)
             self.reiniciarJuego(self.mapa.obtenerFiguraVida(), self.mapa.obtenerCamino(), verificacion)
             mensajeGameOver.mostrar(self.ventana)
-        
-        self.mapa.dibujar(self.ventana)
 
     def reiniciarJuego(self, figuraVida, camino, verificacion):
         figuraVida.reiniciarNumeroDeVidas()
