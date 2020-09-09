@@ -47,7 +47,6 @@ class Ruta(Juego):
         mensajeBienvenida.mostrar(self.ventana)
         mensajeInstrucciones.mostrar(self.ventana)
 
-
     def iniciarJuego(self):
         
         pygame.init() # carga los modulos de la librería pygame
@@ -82,14 +81,15 @@ class Ruta(Juego):
         preguntas.añadirAudioPregunta(pregunta3)
         preguntas.añadirAudioPregunta(pregunta4)
 
-        verificacion = Verificacion(pregunta1, self.mapa, puntaje)
+        verificacion = Verificacion(preguntas, self.mapa, puntaje)
+        #verificacion = Verificacion(pregunta1, self.mapa, puntaje)
         camino = Camino('img/fondoCamino.png', Posicion(settings["coordenadaCamino"]), preguntas)
 
-        solapamientoOpcionA = SolapamientoConOpcion(30, verificacion)
-        solapamientoOpcionB = SolapamientoConOpcion(30, verificacion)
-        solapamientoOpcionC = SolapamientoConOpcion(30, verificacion)
+        solapamientoOpcionA = SolapamientoConOpcion(verificacion)
+        solapamientoOpcionB = SolapamientoConOpcion(verificacion)
+        solapamientoOpcionC = SolapamientoConOpcion(verificacion)
         solapamientosConOpcion = [solapamientoOpcionA, solapamientoOpcionB, solapamientoOpcionC]
-        solapamientoConObstaculo = SolapamientoConObstaculo(30, verificacion, camino)
+        solapamientoConObstaculo = SolapamientoConObstaculo(verificacion, camino)
 
         opcionA = FiguraOpcion('img/botonA.png', Posicion(settings["coordenadaOpcion"][0]), "A", solapamientoOpcionA)
         opcionB = FiguraOpcion('img/botonB.png', Posicion(settings["coordenadaOpcion"][1]), "B", solapamientoOpcionB)
@@ -106,6 +106,8 @@ class Ruta(Juego):
 
         while rutamayainiciado: 
             self.verificarCondiciones(mensajeGameOver, mensajeGanaste, verificacion)
+
+
             self.mapa.dibujar(self.ventana)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -129,6 +131,7 @@ class Ruta(Juego):
         figuraVida.reiniciarNumeroDeVidas()
         camino.reiniciarIteradores()
         verificacion.reiniciarNumeroPreguntasContestadas()
+        verificacion._i = 0
 
     def salirJuego(self):
         pass

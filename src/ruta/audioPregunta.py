@@ -36,14 +36,14 @@ class AudioPregunta:
 
 class Playlist:
 
-    _ListaAudiosPreguntas = []
+    listaAudiosPreguntas = []
 
     def añadirAudioPregunta(self, pregunta):
         if isinstance(pregunta, AudioPregunta):
-            self._ListaAudiosPreguntas.append(pregunta)
+            self.listaAudiosPreguntas.append(pregunta)
 
     def quitarAudioPregunta(self, pregunta):
-        self._ListaAudiosPreguntas.remove(pregunta)
+        self.listaAudiosPreguntas.remove(pregunta)
     
     def obtenerAudiosPreguntas(self):
-        return self._ListaAudiosPreguntas
+        return self.listaAudiosPreguntas

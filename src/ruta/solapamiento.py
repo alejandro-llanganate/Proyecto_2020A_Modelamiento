@@ -16,10 +16,11 @@ class Solapamiento():
 
 
 class SolapamientoConObstaculo(Solapamiento):
-    def __init__(self, umbral, verificacion, camino):
+    def __init__(self, verificacion, camino):
         self.verificacion = verificacion
         self.camino = camino
-        self.umbral = umbral # Para controlar la distancia entre los objetos al solapar
+        self.umbral = int(settings["tamañoVentana"][1]*0.09) # Para controlar la distancia minima entre los objetos al solapar
+        print(self.umbral)
         self.s_posicionObstaculo = None # Variable para asociar la posición de un obstáculo
     
     def verificarSolapamiento(self, posicionPersonaje):
@@ -37,9 +38,9 @@ class SolapamientoConObstaculo(Solapamiento):
 
 
 class SolapamientoConOpcion(Solapamiento):
-    def __init__(self, umbral, verificacion):
+    def __init__(self, verificacion):
         self.verificacion = verificacion
-        self.umbral = umbral
+        self.umbral = int(settings["tamañoVentana"][1]*0.08)
         self.s_posicionOpcion = None # Variable para asociar la posición de una opción
         self.s_visibilidadOpcion = None # Variable para asociar el estado de visibilidad de una opción
         

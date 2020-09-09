@@ -24,7 +24,7 @@ class Obstaculo(ABC):
 
 class ObstaculoA(Obstaculo):
     def __init__(self):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__))
+        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/obs1.png', __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoObstaculo"])
         
         # Se emplea randint de la librería random para que la posición en x de cada obstáculo al aparecer sea randómica
@@ -45,7 +45,7 @@ class ObstaculoA(Obstaculo):
 
 class ObstaculoB(Obstaculo):
     def __init__(self):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__)).convert()
+        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/obs2.png', __file__)).convert_alpha()
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoObstaculo"])
         self.posicion = Posicion((randint(int(settings["limiteMinObstaculoX"]), int(settings["limiteMaxObstaculoX"])), settings["tamañoVentana"][1]))
  
@@ -63,7 +63,7 @@ class ObstaculoB(Obstaculo):
 
 class ObstaculoC(Obstaculo):
     def __init__(self):
-        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/roca.png', __file__)).convert()
+        self.imagen = pygame.image.load(obtenerPathAbsoluto('img/obs3.png', __file__))
         self.imagen = pygame.transform.scale(self.imagen, settings["tamañoObstaculo"])
         self.posicion = Posicion((randint(int(settings["limiteMinObstaculoX"]), int(settings["limiteMaxObstaculoX"])), settings["tamañoVentana"][1]))
  

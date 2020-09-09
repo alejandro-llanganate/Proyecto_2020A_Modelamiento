@@ -13,16 +13,16 @@ from time import sleep
 class Verificacion:
 
     _numeroPreguntasContestadas = 0
+    _i = 0
 
-    def __init__(self, audioPregunta, mapa, puntaje):
+    def __init__(self, audiosPreguntas, mapa, puntaje):
         self.mapa = mapa
-        self.audio = audioPregunta
+        self.audios = audiosPreguntas
         self.puntaje = puntaje
-
+        
     def verificarSeleccion(self, letraSeleccionada):
         self._numeroPreguntasContestadas += 1 # Luego de haber seleccionado una opción se incrementa la variable
-
-        if(self.audio.obtenerLetraRespuesta() == letraSeleccionada):
+        if(self.audios.listaAudiosPreguntas[self._i].obtenerLetraRespuesta() == letraSeleccionada):
             pygame.mixer.music.load(obtenerPathAbsoluto('sounds/sonidoRespuestaCorrecta.mp3', __file__))
             pygame.mixer.music.play(0) # Se reproduce reiteradamente
             sleep(3) # para controlar la fluidez del juego con el audio se emplea sleep
@@ -33,6 +33,7 @@ class Verificacion:
             pygame.mixer.music.play(0)
             sleep(3)
             self.mapa.actualizar(False) # False para actualizar la FiguraVida y restar una vida
+        self._i+=1
 
     def comunicarSolapamientoObstaculo(self, valor): # Comunica a mapa el mensaje de la verificación en Solapamiento de que se solapó un obstáculo 
         if valor:
