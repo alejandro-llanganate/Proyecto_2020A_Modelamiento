@@ -41,20 +41,19 @@ class SolapamientoConOpcion(Solapamiento):
     def __init__(self, verificacion):
         self.verificacion = verificacion
         self.umbral = int(settings["tamañoVentana"][1]*0.08)
-        self.s_posicionOpcion = None # Variable para asociar la posición de una opción
-        self.s_visibilidadOpcion = None # Variable para asociar el estado de visibilidad de una opción
+        self.posicionOpcion = None # Variable para asociar la posición de una opción
+        self.visibilidadOpcion = None # Variable para asociar el estado de visibilidad de una opción
         
     def verificarSolapamiento(self, posicionJugador):
-        if self.s_posicionOpcion != None and self.s_visibilidadOpcion == True:
+        if self.posicionOpcion != None and self.visibilidadOpcion == True:
             (x1, y1) = posicionJugador 
-            (x2, y2) = self.s_posicionOpcion
+            (x2, y2) = self.posicionOpcion
             distancia = math.sqrt(math.pow(x2-x1, 2) + math.pow(y2-y1, 2)) 
 
             if distancia <= self.umbral:  # verifica la distancia mínima para el solapamiento con una opción
                 self.verificacion.verificarSeleccion(self.letraSeleccionada) # Luego verificación comparará la letra seleccionada con la letra respuesta del audio
     
-    def actualizar(self, posicionOpcion, visibilidad, letra): # Método actualizar() del patrón observador entre Solapamiento y FiguraOpción
-        # Actualiza la posición de la opción, su visibilidad y su letra asociada
-        self.letraSeleccionada = letra
-        self.s_posicionOpcion = posicionOpcion
-        self.s_visibilidadOpcion = visibilidad
+    def actualizar(self, visibilidad, posicionOpcion, letraAsociada): # Método actualizar() del patrón observador entre Solapamiento y FiguraOpción
+        self.visibilidadOpcion = visibilidad
+        self.posicionOpcion = posicionOpcion
+        self.letraSeleccionada = letraAsociada

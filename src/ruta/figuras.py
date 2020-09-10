@@ -133,6 +133,7 @@ class FiguraOpcion(Figura):
     def dibujar(self, ventana):
         if(self.visibilidad == True):
             ventana.blit(self.imagen, self.posicion.obtenerCoordenadas())
+        self.notificar()
 
     def mover(self):
         pass
@@ -141,8 +142,8 @@ class FiguraOpcion(Figura):
         self.visibilidad = esVisible
 
     # NOTE: notificar() del patrón observador entre FiguraOpción y SolapamientoConOpción
-    def notificar(self):
-        self.solapamiento.actualizar(self.posicion.obtenerCoordenadas(), self.visibilidad, self.getLetraAsociada())
+    def notificar(self): 
+        self.solapamiento.actualizar(self.visibilidad, self.posicion.obtenerCoordenadas(), self.getLetraAsociada())
 
     def getLetraAsociada(self):
         return self.letraAsociada
@@ -242,8 +243,6 @@ class Mapa(Figura):
     def dibujar(self, ventana):
         for figura in self.listaFiguras:
             figura.dibujar(ventana)
-            if isinstance(figura, FiguraOpcion):
-                figura.notificar() 
 
     def mover(self, ventana):
         for figura in self.listaFiguras:
