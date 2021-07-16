@@ -5,7 +5,7 @@ El presente repositorio pertenece al proyecto final de la materia de Modelamient
 https://github.com/Mikkel-14?tab=overview&from=2020-08-01&to=2020-08-31
 
 ## Pre requisitos
-- Tener instalado python en su versión 3.6.X o hasta su versión más actual.
+- Tener instalado python en su versión 3.6.X o hasta su versión más actual
 - Tener instalada la librería pygame en su versión 1.9.X
 ```
 pip3 install pygame
